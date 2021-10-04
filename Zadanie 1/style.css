@@ -36,8 +36,6 @@ body {
   left: 35%;
   width: 18vw;
   height: 11vh;
-  min-height: 50px;
-  min-width: 50px;
   background-color: rgb(70, 70, 70);
   border: 2px solid black;
   border-radius: 3vh;
