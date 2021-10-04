@@ -1,0 +1,74 @@
+body {
+  background: #66ccff;
+  margin: 0;
+}
+
+.road {
+  position: absolute;
+  top: 70%;
+  height: 15%;
+  width: 100%;
+  background: #232323;
+  border-bottom: 3px solid white;
+}
+
+.road-2 {
+  position: absolute;
+  top: 85%;
+  height: 15%;
+  width: 100%;
+  background: #232323;
+  border-top: 3px solid white;
+}
+
+.sun {
+  position: absolute;
+  top: 6vh;
+  left: 6vh;
+  width: 8vh;
+  min-height: 50px;
+  min-width: 50px;
+  height: 8vh;
+  border-radius: 50%;
+  background: #ffff1c;
+}
+
+.car {
+  position: absolute;
+  top: 64.5%;
+  left: 35%;
+  width: 30%;
+  height: 10%;
+  min-height: 50px;
+  min-width: 50px;
+  background-color: rgb(70, 70, 70);
+  border-radius: 3vh;
+}
+
+.stop-light {
+  position: relative;
+  top: 32%;
+  width: 5vh;
+  height: 3vh;
+  background-color: red;
+  border-radius: 25%;
+}
+
+.rear-light {
+  position: relative;
+  left: 92%;
+  width: 5vh;
+  height: 3vh;
+  background-color: white;
+  border-radius: 25%;
+}
+
+.left-wheel {
+  position: relative;
+  border-radius: 55%;
+}
+
+.right-wheel {
+  position: relative;
+  border-radius: 55%;
+}
