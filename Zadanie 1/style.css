@@ -65,7 +65,8 @@ body {
 .wheel {
   position: absolute;
   border-radius: 55%;
-  width: 2.5vw;
+  top:6vh;
+  width: 3vw;
   height: 9vh;
   background-color: black;
   border: 1px solid white;
