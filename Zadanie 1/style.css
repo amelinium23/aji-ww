@@ -9,7 +9,6 @@ body {
   height: 15%;
   width: 100%;
   background: #232323;
-  border-bottom: 3px solid white;
 }
 
 .road-2 {
@@ -18,7 +17,7 @@ body {
   height: 15%;
   width: 100%;
   background: #232323;
-  border-top: 3px solid white;
+  border-top: 3px dashed white;
 }
 
 .sun {
@@ -30,18 +29,19 @@ body {
   min-width: 50px;
   height: 8vh;
   border-radius: 50%;
-  background: #ffff1c;
+  background: #ffff00;
 }
 
 .car {
   position: absolute;
   top: 64.5%;
   left: 35%;
-  width: 30%;
-  height: 10%;
+  width: 62vh;
+  height: 11vh;
   min-height: 50px;
   min-width: 50px;
   background-color: rgb(70, 70, 70);
+  border: 2px solid black;
   border-radius: 3vh;
 }
 
@@ -64,11 +64,52 @@ body {
 }
 
 .left-wheel {
-  position: relative;
+  position: absolute;
   border-radius: 55%;
+  width: 9vh;
+  height: 9vh;
+  left: 10vh;
+  background-color: black;
+  border: 1px solid white;
 }
 
 .right-wheel {
-  position: relative;
+  position: absolute;
   border-radius: 55%;
+  width: 9vh;
+  height: 9vh;
+  left: 40vh;
+  background-color: black;
+  border: 1px solid white;
+}
+
+.car-body {
+  position: absolute;
+  border-bottom: 14vh solid rgb(70, 70, 70);
+  border-left: 6vh solid transparent;
+  border-right: 6vh solid transparent;
+  height: 0;
+  width: 30vh;
+  left: 10vh;
+  bottom: 10vh;
+}
+
+.left-window {
+  position: fixed;
+  background-color: white;
+  top: 54vh;
+  width: 10vh;
+  height: 10vh;
+  bottom: 1%;
+  left: 90vh;
+}
+
+.right-window {
+  position: fixed;
+  background-color: white;
+  width: 10vh;
+  height: 10vh;
+  top: 54vh;
+  left: 108vh;
+  bottom: 40vh;
 }
