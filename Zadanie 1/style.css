@@ -5,18 +5,16 @@ body {
 
 .road {
   position: absolute;
-  top: 70%;
   height: 15%;
   width: 100%;
   background: #232323;
 }
+.top-road {
+  top: 70%;
+}
 
-.road-2 {
-  position: absolute;
+.bottom-road {
   top: 85%;
-  height: 15%;
-  width: 100%;
-  background: #232323;
   border-top: 3px dashed white;
 }
 
@@ -24,7 +22,7 @@ body {
   position: absolute;
   top: 6vh;
   left: 6vh;
-  width: 8vh;
+  width: 2.5vw;
   min-height: 50px;
   min-width: 50px;
   height: 8vh;
@@ -36,7 +34,7 @@ body {
   position: absolute;
   top: 64.5%;
   left: 35%;
-  width: 62vh;
+  width: 18vw;
   height: 11vh;
   min-height: 50px;
   min-width: 50px;
@@ -45,71 +43,66 @@ body {
   border-radius: 3vh;
 }
 
-.stop-light {
+.light {
   position: relative;
-  top: 32%;
-  width: 5vh;
   height: 3vh;
-  background-color: red;
   border-radius: 25%;
+
+}
+
+.stop-light {
+  top: 32%;
+  width: 2vw;
+  background-color: red;
 }
 
 .rear-light {
-  position: relative;
   left: 92%;
-  width: 5vh;
-  height: 3vh;
+  width: 1.5vw;
   background-color: white;
-  border-radius: 25%;
+}
+
+.wheel {
+  position: absolute;
+  border-radius: 55%;
+  width: 2.5vw;
+  height: 9vh;
+  background-color: black;
+  border: 1px solid white;
 }
 
 .left-wheel {
-  position: absolute;
-  border-radius: 55%;
-  width: 9vh;
-  height: 9vh;
-  left: 10vh;
-  background-color: black;
-  border: 1px solid white;
-}
+  left: 2.5vw;
 
+}
 .right-wheel {
-  position: absolute;
-  border-radius: 55%;
-  width: 9vh;
-  height: 9vh;
-  left: 40vh;
-  background-color: black;
-  border: 1px solid white;
+  left: 12.5vw;
+
 }
 
 .car-body {
   position: absolute;
   border-bottom: 14vh solid rgb(70, 70, 70);
-  border-left: 6vh solid transparent;
-  border-right: 6vh solid transparent;
+  border-left: 1.5vw solid transparent;
+  border-right: 1.5vw solid transparent;
   height: 0;
-  width: 30vh;
-  left: 10vh;
+  width: 9.5vw;
+  left: 2.5vw;
   bottom: 10vh;
 }
 
-.left-window {
-  position: fixed;
+.window {
+  position: absolute;
   background-color: white;
-  top: 54vh;
-  width: 10vh;
+  top: 2vh;
+  width: 3vw;
   height: 10vh;
-  bottom: 1%;
-  left: 90vh;
+}
+
+.left-window {
+  left: 0.5vw;
 }
 
 .right-window {
-  position: fixed;
-  background-color: white;
-  width: 10vh;
-  height: 10vh;
-  top: 54vh;
-  left: 108vh;
-  bottom: 40vh;
+  left: 6vw
 }
