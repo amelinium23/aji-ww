@@ -41,7 +41,7 @@ body {
   border-radius: 3vh;
 }
 
-.light {
+.car>.light {
   position: relative;
   height: 3vh;
   border-radius: 25%;
@@ -100,8 +100,74 @@ body {
 
 .left-window {
   left: 0.5vw;
+  border-top-left-radius:50%
 }
 
 .right-window {
-  left: 6vw
+  left: 6vw;
+  border-top-right-radius:50%
 }
+
+.crossing {
+  position:absolute;
+  top:70%;
+  left:10%;
+  width:15%;
+  height:30%;
+}
+
+.crossing>div {
+  position:relative;
+  height:11%;
+  width:auto;
+  background-color:transparent;
+}
+.crossing>div:nth-child(2n) {
+  background-color:white;
+  height:7%;
+}
+
+.traffic-lights {
+  position:absolute;
+  top:40%;
+  height:15%;
+
+  left:5%;
+  width:4%;
+  background-color:#5c5b5b;
+}
+.traffic-lights>.light {
+  position:absolute;
+  width: 60%;
+  height: 25%;
+  border-radius: 50%;
+  border:1px ridge black;
+  left:20%;
+}
+
+.traffic-lights>.red {
+  background-color:rgb(114, 0, 0);
+  top:5%;
+}
+
+.traffic-lights>.yellow {
+  background-color:rgb(112, 112, 0);
+  top:35%;
+}
+
+.traffic-lights>.green {
+  background-color:rgb(0, 209, 0);
+  top:65%;
+}
+
+
+
+.traffic-lights>.pole {
+  position:absolute;
+  top:100%;
+  height:100%;
+  width:16%;
+  left:44%;
+  background-color:#5c5b5b;
+}
+
