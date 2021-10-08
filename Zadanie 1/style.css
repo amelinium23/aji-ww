@@ -41,6 +41,8 @@ body {
   background-color: rgb(70, 70, 70);
   border: 2px solid black;
   border-radius: 3vh;
+  box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000,
+    5px 5px 5px 5px rgba(0, 0, 0, 0);
 }
 
 .car > .light {
