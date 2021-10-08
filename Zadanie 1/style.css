@@ -28,12 +28,14 @@ body {
   height: 8vh;
   border-radius: 50%;
   background: #ffff00;
+  box-shadow: #fff 0 -1px 4px, #ff0 0 -2px 10px, #ffae17 0 -10px 20px,
+    red 0 -18px 40px, 5px 5px 5px 5px rgba(0, 0, 0, 0);
 }
 
 .car {
   position: absolute;
   top: 64.5%;
-  left: 35%;
+  left: 45%;
   width: 18vw;
   height: 11vh;
   background-color: rgb(70, 70, 70);
