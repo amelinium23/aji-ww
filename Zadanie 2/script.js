@@ -1,18 +1,52 @@
 "use strict";
 let todoList = [];
+let initList = function () {
+  todoList.push(
+    {
+      title: "Learn JS",
+      description: "Create a demo application for my TODO's",
+      place: "445",
+      dueDate: new Date(2019, 10, 16),
+    },
+    {
+      title: "Lecture test",
+      description: "Quick test from the first three lectures",
+      place: "F6",
+      dueDate: new Date(2019, 10, 17),
+    }
+  );
+};
+
+$.ajax({
+  // copy Your bin identifier here. It can be obtained in the dashboard
+  url: "https://api.jsonbin.io/b/6162a90aaa02be1d445747f8/latest",
+  type: "GET",
+  headers: {
+    //Required only if you are trying to access a private bin
+    "secret-key":
+      "$2b$10$Vh8O/VTaKC88yeAXXUohmutj1KNGVnU47h5kLtdcVFfStrBW2xq9e",
+  },
+  success: (data) => {
+    // console.log(data);
+    todoList = data;
+  },
+  error: (err) => {
+    console.log(err.responseJSON);
+  },
+});
 
 let updateJSONbin = function () {
   $.ajax({
-    url: "https://api.jsonbin.io/b/61629d2b9548541c29c10234",
+    url: "https://api.jsonbin.io/b/6162a90aaa02be1d445747f8",
     type: "PUT",
     headers: {
       "secret-key":
-        "$2b$10$iCTFXKQZOYOAfV1tELk6AuMoPwH2XlHg1cSKHHX77SDvJLnvFxAoS",
+        "$2b$10$Vh8O/VTaKC88yeAXXUohmutj1KNGVnU47h5kLtdcVFfStrBW2xq9e",
     },
     contentType: "application/json",
     data: JSON.stringify(todoList),
     success: (data) => {
-      console.log(data);
+      // console.log(data);
       todoList = data.data;
     },
     error: (err) => {
@@ -54,10 +88,9 @@ let updateTodoList = function () {
       todoListDiv.appendChild(newDeleteButton);
     }
   }
-  updateJSONbin();
 };
 
-setInterval(updateTodoList, 2000);
+setInterval(updateTodoList, 1000);
 
 let addTodo = function () {
   //get the elements in the form
