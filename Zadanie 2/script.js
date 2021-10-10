@@ -1,24 +1,29 @@
 "use strict";
 let todoList = [];
-let initList = function () {
-  todoList.push(
-    {
-      title: "Learn JS",
-      description: "Create a demo application for my TODO's",
-      place: "445",
-      dueDate: new Date(2019, 10, 16),
+
+let updateJSONbin = function () {
+  $.ajax({
+    url: "https://api.jsonbin.io/b/61629d2b9548541c29c10234",
+    type: "PUT",
+    headers: {
+      "secret-key":
+        "$2b$10$iCTFXKQZOYOAfV1tELk6AuMoPwH2XlHg1cSKHHX77SDvJLnvFxAoS",
     },
-    {
-      title: "Lecture test",
-      description: "Quick test from the first three lectures",
-      place: "F6",
-      dueDate: new Date(2019, 10, 17),
-    }
-  );
+    contentType: "application/json",
+    data: JSON.stringify(todoList),
+    success: (data) => {
+      console.log(data);
+      todoList = data.data;
+    },
+    error: (err) => {
+      console.log(err.responseJSON);
+    },
+  });
 };
-initList();
+
 let deleteTodo = function (index) {
   todoList.splice(index, 1);
+  updateJSONbin();
 };
 
 let updateTodoList = function () {
@@ -39,16 +44,19 @@ let updateTodoList = function () {
       );
       newElement.appendChild(newContent);
       todoListDiv.appendChild(newElement);
+      let newDeleteButton = document.createElement("input");
+      newDeleteButton.type = "button";
+      newDeleteButton.value = "x";
+      newDeleteButton.addEventListener("click", function () {
+        deleteTodo(todo);
+      });
+      todoListDiv.appendChild(newDeleteButton);
     }
   }
-  let newDeleteButton = document.createElement("input");
-  newDeleteButton.type = "button";
-  newDeleteButton.value = "x";
-  newDeleteButton.addEventListener("click", function () {
-    deleteTodo(todo);
-  });
+  updateJSONbin();
 };
-setInterval(updateTodoList, 1000);
+
+setInterval(updateTodoList, 10000);
 
 let addTodo = function () {
   //get the elements in the form
@@ -70,7 +78,7 @@ let addTodo = function () {
   };
   //add item to the list
   todoList.push(newTodo);
-  window.localStorage.setItem("todos", JSON.stringify(todoList));
+  updateJSONbin();
 };
 
 let filterInput = document.getElementById("inputSearch");
