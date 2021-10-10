@@ -1,21 +1,5 @@
 "use strict";
 let todoList = [];
-let initList = function () {
-  todoList.push(
-    {
-      title: "Learn JS",
-      description: "Create a demo application for my TODO's",
-      place: "445",
-      dueDate: new Date(2019, 10, 16),
-    },
-    {
-      title: "Lecture test",
-      description: "Quick test from the first three lectures",
-      place: "F6",
-      dueDate: new Date(2019, 10, 17),
-    }
-  );
-};
 
 $.ajax({
   // copy Your bin identifier here. It can be obtained in the dashboard
@@ -114,19 +98,3 @@ let addTodo = function () {
   todoList.push(newTodo);
   updateJSONbin();
 };
-
-let filterInput = document.getElementById("inputSearch");
-for (let todo in todoList) {
-  if (
-    filterInput.value == "" ||
-    todoList[todo].title.includes(filterInput.value) ||
-    todoList[todo].description.includes(filterInput.value)
-  ) {
-    let newElement = document.createElement("p");
-    let newContent = document.createTextNode(
-      todoList[todo].title + " " + todoList[todo].description
-    );
-    newElement.appendChild(newContent);
-    todoListDiv.appendChild(newElement);
-  }
-}
