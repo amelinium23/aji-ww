@@ -47,6 +47,7 @@ let updateTodoList = function () {
       let newDeleteButton = document.createElement("input");
       newDeleteButton.type = "button";
       newDeleteButton.value = "x";
+      newDeleteButton.className = "btn btn-danger";
       newDeleteButton.addEventListener("click", function () {
         deleteTodo(todo);
       });
@@ -56,7 +57,7 @@ let updateTodoList = function () {
   updateJSONbin();
 };
 
-setInterval(updateTodoList, 10000);
+setInterval(updateTodoList, 2000);
 
 let addTodo = function () {
   //get the elements in the form
