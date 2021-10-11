@@ -59,7 +59,7 @@ let createNewTableRow = (todo) => {
 let updateTodoList = function () {
   let todoListTable = $("#todoTableBody");
   let titleValue = $("#inputSearch").val();
-  let toDateValue = new Date($("#toDateSearch").val()).toDateString();
+  let toDateValue = new Date($("#toDateSearch").val()).toLocaleDateString();
   let fromDateValue = new Date($(`#fromDateSearch`).val()).toLocaleDateString();
   $(`tr:not(:first)`).remove();
   for (let todo in todoList) {
