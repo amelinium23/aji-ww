@@ -1,0 +1,14 @@
+h1,
+h3 {
+  text-align: center;
+}
+
+body > * {
+  margin: 2vh;
+}
+
+.addButton {
+  margin-top: 2vh;
+  width: 20vw;
+  margin-left: 48vh;
+}

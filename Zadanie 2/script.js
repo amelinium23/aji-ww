@@ -61,15 +61,18 @@ let createNewTableRow = (todo) => {
 let updateTodoList = function () {
   let todoListTable = $("#todoTableBody");
   let titleValue = $("#inputSearch").val();
-  let dateValue = new Date($("dateSearch").val());
+  let toDateValue = new Date($("#toDateSearch").val());
+  let fromDateValue = new Date($(`#fromDateSearch`).val());
   $(`tr:not(:first)`).remove();
   for (let todo in todoList) {
     if (
       titleValue == "" ||
       todoList[todo].title.includes(titleValue) ||
       todoList[todo].description.includes(titleValue) ||
-      todoList[todo].dueDate.includes(dateValue)
+      (todoList[todo].dueDate >= fromDateValue &&
+        todoList[todo].dueDate <= toDateValue)
     ) {
+      console.log(fromDateValue, toDateValue);
       const newElement = createNewTableRow(todoList[todo]);
       todoListTable.append(newElement);
     }
