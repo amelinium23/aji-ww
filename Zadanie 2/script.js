@@ -2,11 +2,9 @@
 let todoList = [];
 
 $.ajax({
-  // copy Your bin identifier here. It can be obtained in the dashboard
   url: "https://api.jsonbin.io/b/6162a90aaa02be1d445747f8/latest",
   type: "GET",
   headers: {
-    //Required only if you are trying to access a private bin
     "secret-key":
       "$2b$10$Vh8O/VTaKC88yeAXXUohmutj1KNGVnU47h5kLtdcVFfStrBW2xq9e",
   },
@@ -67,12 +65,13 @@ let updateTodoList = function () {
   for (let todo in todoList) {
     if (
       titleValue == "" ||
+      toDateValue == "" ||
+      fromDateValue == "" ||
       todoList[todo].title.includes(titleValue) ||
       todoList[todo].description.includes(titleValue) ||
-      (todoList[todo].dueDate >= fromDateValue &&
-        todoList[todo].dueDate <= toDateValue)
+      (new Date(todoList[todo].dueDate) >= fromDateValue &&
+        new Date(todoList[todo].dueDate) <= toDateValue)
     ) {
-      console.log(fromDateValue, toDateValue);
       const newElement = createNewTableRow(todoList[todo]);
       todoListTable.append(newElement);
     }
