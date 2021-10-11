@@ -30,7 +30,7 @@ let updateJSONbin = function () {
     contentType: "application/json",
     data: JSON.stringify(todoList),
     success: (data) => {
-      console.log("sent new todoList => " + data.data);
+      console.log(data);
       todoList = data.data;
     },
     error: (err) => {
@@ -49,7 +49,9 @@ let createNewTableRow = (todo) => {
   $(`<td>${todo.title}</td>)`).appendTo(rowElement);
   $(`<td>${todo.description}</td>`).appendTo(rowElement);
   $(`<td>${todo.place}</td>`).appendTo(rowElement);
-  $(`<td>${todo.dueDate}</td>`).appendTo(rowElement);
+  $(`<td>${new Date(todo.dueDate).toLocaleDateString()}</td>`).appendTo(
+    rowElement
+  );
   $(`<td><input type="button" class="btn btn-danger" value="x" /></td>`)
     .click((todo) => deleteTodo(todo))
     .appendTo(rowElement);
@@ -60,6 +62,7 @@ let updateTodoList = function () {
   let todoListTable = $("#todoTableBody");
   let titleValue = $("#inputSearch").val();
   let dateValue = new Date($("dateSearch").val());
+  $(`tr:not(:first)`).remove();
   for (let todo in todoList) {
     if (
       titleValue == "" ||
@@ -72,24 +75,19 @@ let updateTodoList = function () {
     }
   }
 };
+setInterval(updateTodoList, 2000);
 
 let addTodo = function () {
-  //get the values from the form
   let newTitle = $("#inputTitle").val();
   let newDescription = $("#inputDescription").val();
   let newPlace = $("#inputPlace").val();
   let newDate = new Date($("#inputDate").val());
-  //create new item
   let newTodo = {
     title: newTitle,
     description: newDescription,
     place: newPlace,
     dueDate: newDate,
   };
-  //add item to the list
   todoList.push(newTodo);
   updateJSONbin();
 };
-updateTodoList();
-
-// setInterval(updateTodoList, 2100);

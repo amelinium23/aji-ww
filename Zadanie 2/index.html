@@ -22,8 +22,8 @@
     <script src="./script.js"></script>
     <title>MyTODO App</title>
   </head>
-  <body class="container">
-    <div class="container">
+  <body>
+    <div class="container-lg">
       <h1>MyNotes</h1>
       <div class="row">
         <div class="col-md-6">
@@ -35,19 +35,31 @@
             placeholder="Type Your search here..."
           />
         </div>
-        <div class="col-md-6">
+        <div class="container-fluid col-md-6">
           <label class="form-label">Date search</label>
-          <input
-            class="form-control"
-            type="date"
-            id="dateSearch"
-            placeholder="Choose date"
-          />
+          <div class="row">
+            <div class="col-md-6">
+              <input
+                class="form-control"
+                type="date"
+                id="fromDateSearch"
+                placeholder="Date from we search"
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                class="form-control"
+                type="date"
+                id="toDateSearch"
+                placeholder="Date to we search"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <table id="todoListTable" class="table">
-      <thead class="thead-dark">
+    <table id="todoListTable" class="container table table-striped table-hover">
+      <thead>
         <tr>
           <th>Title</th>
           <th>Description</th>
@@ -61,11 +73,11 @@
     <form class="container">
       <h3>Add Todo</h3>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
           <label class="form-label">Title</label>
           <input class="form-control" type="text" id="inputTitle" />
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <label class="form-label">Description</label>
           <input class="form-control" type="text" id="inputDescription" />
         </div>
@@ -77,15 +89,13 @@
           <label class="form-label">Due date</label>
           <input type="date" id="inputDate" class="form-control" />
         </div>
-        <div class="row">
-          <div class="col-md-3">
-            <input
-              type="button"
-              class="btn btn-primary"
-              value="add"
-              onclick="addTodo()"
-            />
-          </div>
+        <div class="col-md-2" style="margin-top: auto">
+          <input
+            type="button"
+            class="btn btn-primary form-control"
+            value="add"
+            onclick="addTodo()"
+          />
         </div>
       </div>
     </form>
