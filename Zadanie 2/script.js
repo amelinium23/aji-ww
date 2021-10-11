@@ -30,7 +30,7 @@ let updateJSONbin = function () {
     contentType: "application/json",
     data: JSON.stringify(todoList),
     success: (data) => {
-      // console.log(data);
+      console.log("sent new todoList => " + data.data);
       todoList = data.data;
     },
     error: (err) => {
@@ -44,37 +44,34 @@ let deleteTodo = function (index) {
   updateJSONbin();
 };
 
+let createNewTableRow = (todo) => {
+  let rowElement = $("<tr></tr>");
+  $(`<td>${todo.title}</td>)`).appendTo(rowElement);
+  $(`<td>${todo.description}</td>`).appendTo(rowElement);
+  $(`<td>${todo.place}</td>`).appendTo(rowElement);
+  $(`<td>${todo.dueDate}</td>`).appendTo(rowElement);
+  $(`<td><input type="button" class="btn btn-danger" value="x" /></td>`)
+    .click((todo) => deleteTodo(todo))
+    .appendTo(rowElement);
+  return rowElement;
+};
+
 let updateTodoList = function () {
-  let todoListDiv = document.getElementById("todoListView");
-  while (todoListDiv.firstChild) {
-    todoListDiv.removeChild(todoListDiv.firstChild);
-  }
-  let filterInput = document.getElementById("inputSearch");
+  let todoListTable = $("#todoTableBody");
+  let titleValue = $("#inputSearch").val();
+  let dateValue = new Date($("dateSearch").val());
   for (let todo in todoList) {
     if (
-      filterInput.value == "" ||
-      todoList[todo].title.includes(filterInput.value) ||
-      todoList[todo].description.includes(filterInput.value)
+      titleValue == "" ||
+      todoList[todo].title.includes(titleValue) ||
+      todoList[todo].description.includes(titleValue) ||
+      todoList[todo].dueDate.includes(dateValue)
     ) {
-      let newElement = document.createElement("p");
-      let newContent = document.createTextNode(
-        todoList[todo].title + " " + todoList[todo].description
-      );
-      newElement.appendChild(newContent);
-      todoListDiv.appendChild(newElement);
-      let newDeleteButton = document.createElement("input");
-      newDeleteButton.type = "button";
-      newDeleteButton.value = "x";
-      newDeleteButton.className = "btn btn-danger";
-      newDeleteButton.addEventListener("click", function () {
-        deleteTodo(todo);
-      });
-      todoListDiv.appendChild(newDeleteButton);
+      const newElement = createNewTableRow(todoList[todo]);
+      todoListTable.append(newElement);
     }
   }
 };
-
-setInterval(updateTodoList, 1000);
 
 let addTodo = function () {
   //get the values from the form
@@ -93,3 +90,6 @@ let addTodo = function () {
   todoList.push(newTodo);
   updateJSONbin();
 };
+updateTodoList();
+
+// setInterval(updateTodoList, 2100);

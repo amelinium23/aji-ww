@@ -26,8 +26,8 @@
     <div class="container">
       <h1>MyNotes</h1>
       <div class="row">
-        <div class="col-md-3">
-          <label class="form-label">Search</label>
+        <div class="col-md-6">
+          <label class="form-label">Title/description search</label>
           <input
             class="form-control"
             type="text"
@@ -35,10 +35,19 @@
             placeholder="Type Your search here..."
           />
         </div>
+        <div class="col-md-6">
+          <label class="form-label">Date search</label>
+          <input
+            class="form-control"
+            type="date"
+            id="dateSearch"
+            placeholder="Choose date"
+          />
+        </div>
       </div>
     </div>
     <table id="todoListTable" class="table">
-      <thead>
+      <thead class="thead-dark">
         <tr>
           <th>Title</th>
           <th>Description</th>
@@ -47,15 +56,8 @@
           <th>Delete</th>
         </tr>
       </thead>
-      <tr>
-        <td>a</td>
-        <td>a</td>
-        <td>a</td>
-        <td>a</td>
-        <td>a</td>
-      </tr>
+      <tbody id="todoTableBody" class="table-striped"></tbody>
     </table>
-    <div id="todoListView"></div>
     <form class="container">
       <h3>Add Todo</h3>
       <div class="row">
