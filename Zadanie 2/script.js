@@ -11,7 +11,7 @@ $.ajax({
       "$2b$10$Vh8O/VTaKC88yeAXXUohmutj1KNGVnU47h5kLtdcVFfStrBW2xq9e",
   },
   success: (data) => {
-    // console.log(data);
+    console.log(data);
     todoList = data;
   },
   error: (err) => {
@@ -77,16 +77,11 @@ let updateTodoList = function () {
 setInterval(updateTodoList, 1000);
 
 let addTodo = function () {
-  //get the elements in the form
-  let inputTitle = document.getElementById("inputTitle");
-  let inputDescription = document.getElementById("inputDescription");
-  let inputPlace = document.getElementById("inputPlace");
-  let inputDate = document.getElementById("inputDate");
   //get the values from the form
-  let newTitle = inputTitle.value;
-  let newDescription = inputDescription.value;
-  let newPlace = inputPlace.value;
-  let newDate = new Date(inputDate.value);
+  let newTitle = $("#inputTitle").val();
+  let newDescription = $("#inputDescription").val();
+  let newPlace = $("#inputPlace").val();
+  let newDate = new Date($("#inputDate").val());
   //create new item
   let newTodo = {
     title: newTitle,
