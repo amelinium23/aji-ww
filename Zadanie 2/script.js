@@ -77,7 +77,7 @@ let updateTodoList = function () {
     }
   }
 };
-setInterval(updateTodoList, 2000);
+setInterval(updateTodoList, 1000);
 
 let addTodo = function () {
   let newTitle = $("#inputTitle").val();
