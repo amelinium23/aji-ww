@@ -57,21 +57,22 @@ let createNewTableRow = (todo) => {
 };
 
 let updateTodoList = function () {
-  console.log(todoList);
   let todoListTable = $("#todoTableBody");
   let titleValue = $("#inputSearch").val();
-  let toDateValue = new Date($("#toDateSearch").val()).toLocaleDateString();
-  let fromDateValue = new Date($(`#fromDateSearch`).val()).toLocaleDateString();
+  let toDateValue = new Date($("#toDateSearch").val());
+  let fromDateValue = new Date($(`#fromDateSearch`).val());
+  console.log(toDateValue);
+  console.log(fromDateValue);
   $(`tr:not(:first)`).remove();
   for (let todo in todoList) {
     if (
-      titleValue == "" ||
-      toDateValue == "" ||
-      fromDateValue == "" ||
+      (titleValue == "" ||
       todoList[todo].title.includes(titleValue) ||
-      todoList[todo].description.includes(titleValue) ||
-      (new Date(todoList[todo].dueDate).toLocaleDateString() >= fromDateValue &&
-        new Date(todoList[todo].dueDate).toLocaleDateString() <= toDateValue)
+      todoList[todo].description.includes(titleValue)) && 
+      (isNaN(Date.parse(fromDateValue)) || 
+      new Date(todoList[todo].dueDate) >= fromDateValue) &&
+        (isNaN(Date.parse(toDateValue)) || 
+        new Date(todoList[todo].dueDate) <= toDateValue)
     ) {
       const newElement = createNewTableRow(todoList[todo]);
       todoListTable.append(newElement);
