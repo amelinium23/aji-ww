@@ -1,17 +1,20 @@
 <template>
   <div class="container">
     <Header title="Katalog filmów" />
+    <Table films="[]" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import Header from "./components/Header.vue";
+import Table from "./components/Table.vue";
 
 export default defineComponent({
   name: "App",
   components: {
     Header,
+    Table,
   },
 });
 </script>
@@ -22,9 +25,15 @@ export default defineComponent({
   font-family: "Open Sans", sans-serif;
   text-align: center;
   margin-top: 2vh;
+  align-content: center;
+}
+
+p {
+  color: black;
 }
 
 .container {
+  align-content: center;
   width: 100%;
   margin-top: 2vh;
   margin-bottom: 2vh;
