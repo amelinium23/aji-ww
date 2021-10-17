@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header title="Katalog filmów" />
-    <Table films="[]" />
+    <Table />
   </div>
 </template>
 

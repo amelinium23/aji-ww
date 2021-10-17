@@ -10,7 +10,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr></tr>
+        <tr v-for="film in films" :key="film.title">
+          <td>{{ film.title }}</td>
+          <td>{{ film.year }}</td>
+          <td v-for="actor in film.cast" v-bind:key="actor">
+            {{ actor + "\n" }}
+          </td>
+          <td v-for="genre in film.genres" v-bind:key="genre">
+            {{ genre + "\n" }}
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -18,12 +27,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import films from "../../public/films.json";
 
 export default defineComponent({
   name: "Table",
   props: {
     films: {
       type: Array,
+      default: () => films,
     },
   },
 });
@@ -35,6 +46,7 @@ export default defineComponent({
 }
 
 table {
+  width: 100%;
   align-content: center;
   color: black;
   border: 1px solid black;
