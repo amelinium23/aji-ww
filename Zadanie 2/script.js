@@ -57,6 +57,7 @@ let createNewTableRow = (todo) => {
 };
 
 let updateTodoList = function () {
+  console.log(todoList);
   let todoListTable = $("#todoTableBody");
   let titleValue = $("#inputSearch").val();
   let toDateValue = new Date($("#toDateSearch").val()).toLocaleDateString();
@@ -83,7 +84,7 @@ let addTodo = function () {
   let newTitle = $("#inputTitle").val();
   let newDescription = $("#inputDescription").val();
   let newPlace = $("#inputPlace").val();
-  let newDate = new Date($("#inputDate").val()).toLocaleDateString();
+  let newDate = new Date($("#inputDate").val()).toISOString();
   let newTodo = {
     title: newTitle,
     description: newDescription,
