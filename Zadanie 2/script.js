@@ -42,7 +42,7 @@ let deleteTodo = function (index) {
   updateJSONbin();
 };
 
-let createNewTableRow = (todo) => {
+let createNewTableRow = (todo, index) => {
   let rowElement = $("<tr></tr>");
   $(`<td>${todo.title}</td>)`).appendTo(rowElement);
   $(`<td>${todo.description}</td>`).appendTo(rowElement);
@@ -51,7 +51,7 @@ let createNewTableRow = (todo) => {
     rowElement
   );
   $(`<td><input type="button" class="btn btn-danger" value="x" /></td>`)
-    .click((todo) => deleteTodo(todo))
+    .click(() => deleteTodo(index))
     .appendTo(rowElement);
   return rowElement;
 };
@@ -74,7 +74,7 @@ let updateTodoList = function () {
         (isNaN(Date.parse(toDateValue)) || 
         new Date(todoList[todo].dueDate) <= toDateValue)
     ) {
-      const newElement = createNewTableRow(todoList[todo]);
+      const newElement = createNewTableRow(todoList[todo], todo);
       todoListTable.append(newElement);
     }
   }
