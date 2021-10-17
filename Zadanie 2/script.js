@@ -83,7 +83,7 @@ let addTodo = function () {
   let newTitle = $("#inputTitle").val();
   let newDescription = $("#inputDescription").val();
   let newPlace = $("#inputPlace").val();
-  let newDate = new Date($("#inputDate").val());
+  let newDate = new Date($("#inputDate").val()).toLocaleDateString();
   let newTodo = {
     title: newTitle,
     description: newDescription,
