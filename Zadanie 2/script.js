@@ -61,8 +61,6 @@ let updateTodoList = () => {
   let titleValue = $("#inputSearch").val();
   let toDateValue = new Date($("#toDateSearch").val());
   let fromDateValue = new Date($(`#fromDateSearch`).val());
-  console.log(toDateValue);
-  console.log(fromDateValue);
   $(`tr:not(:first)`).remove();
   for (let todo in todoList) {
     if (
