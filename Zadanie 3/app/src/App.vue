@@ -1,5 +1,5 @@
-<template>
-  <div class="container-lg">
+<template class="container-lg">
+  <div>
     <Header title="Katalog filmów" />
     <Table />
   </div>
