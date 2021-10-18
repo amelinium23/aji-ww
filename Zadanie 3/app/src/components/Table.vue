@@ -44,17 +44,19 @@
         </tr>
       </tbody>
     </table>
-    <div class="col-md-4">
-      <button class="btn btn-primary" @click="increment()">
-        Wczytaj więcej
-      </button>
+    <div class="row">
+      <div class="col-md-12 col-more">
+        <button class="btn btn-primary" @click="increment()">
+          Wczytaj więcej
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import movies from "../../public/films.json";
+import movies from "../../public/movies.json";
 
 export default defineComponent({
   name: "Table",
@@ -73,4 +75,9 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.col-more {
+  align-items: center;
+  margin-bottom: 1vh;
+}
+</style>

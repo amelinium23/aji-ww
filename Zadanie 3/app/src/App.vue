@@ -11,6 +11,7 @@ import { defineComponent } from "vue";
 import Header from "./components/Header.vue";
 import Table from "./components/Table.vue";
 import Finder from "./components/Finder.vue";
+import movies from "../public/movies.json";
 
 export default defineComponent({
   name: "App",
@@ -18,6 +19,11 @@ export default defineComponent({
     Header,
     Table,
     Finder,
+  },
+  data: function () {
+    return {
+      movies: movies,
+    };
   },
 });
 </script>
