@@ -12,6 +12,7 @@
             type="text"
             class="form-control"
             placeholder="Wpisz tytuł filmu"
+            v-model="title"
           />
         </div>
       </div>
@@ -25,6 +26,7 @@
             type="number"
             class="form-control"
             placeholder="Wpisz date od roku produkcji"
+            v-model="fromDate"
           />
         </div>
       </div>
@@ -38,12 +40,13 @@
             type="number"
             class="form-control"
             placeholder="Wpisz date od roku produkcji"
+            v-model="toDate"
           />
         </div>
       </div>
       <div class="row finder-row">
         <div class="col-md-3">
-          <label class="form-label" for="cast">Rok produkcji do: </label>
+          <label class="form-label" for="cast">Wpisz imię aktora</label>
         </div>
         <div class="col-md-9">
           <input
@@ -51,6 +54,7 @@
             type="text"
             class="form-control"
             placeholder="Wpisz obsadę"
+            v-model="cast"
           />
         </div>
       </div>
@@ -64,6 +68,14 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Finder",
+  data: function () {
+    return {
+      toDate: Number,
+      fromDate: Number,
+      cast: new String(""),
+      title: new String(""),
+    };
+  },
 });
 </script>
 

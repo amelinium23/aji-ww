@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <table class="table table-hover">
+    <table class="table table-stripped my-table">
       <thead>
         <tr>
           <th>Title</th>
@@ -45,10 +45,13 @@
       </tbody>
     </table>
     <div class="row">
-      <div class="col-md-12 col-more">
+      <div class="col-md-6 col-more">
         <button class="btn btn-primary" @click="increment()">
           Wczytaj więcej
         </button>
+      </div>
+      <div class="col-md-6 col-more">
+        <button class="btn btn-primary" @click="decrement()">Zwiń</button>
       </div>
     </div>
   </div>
@@ -71,11 +74,19 @@ export default defineComponent({
       this.movies.slice(0, this.moviesToShow);
       this.moviesToShow += 10;
     },
+    decrement: function () {
+      this.movies.slice(this.movies.length, -this.moviesToShow);
+      this.moviesToShow -= 10;
+    },
   },
 });
 </script>
 
 <style scoped>
+.my-table {
+  margin-top: 1vh;
+}
+
 .col-more {
   align-items: center;
   margin-bottom: 1vh;
