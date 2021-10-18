@@ -20,7 +20,7 @@ export default defineComponent({
     Table,
     Finder,
   },
-  data: function () {
+  data() {
     return {
       movies: movies,
     };

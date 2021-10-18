@@ -58,7 +58,7 @@
           />
         </div>
       </div>
-      <button class="btn btn-info form-control">Wyszukaj</button>
+      <button class="btn btn-info col-md-3">Wyszukaj</button>
     </form>
   </div>
 </template>
