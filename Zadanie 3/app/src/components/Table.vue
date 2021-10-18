@@ -1,6 +1,6 @@
-<template class="container-lg">
-  <div>
-    <table class="table-hover">
+<template>
+  <div class="container">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th>Title</th>
@@ -73,6 +73,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
-</style>
+<style scoped></style>

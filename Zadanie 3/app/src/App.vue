@@ -1,6 +1,7 @@
-<template class="container-lg">
-  <div>
+<template>
+  <div class="container-fluid">
     <Header title="Katalog filmów" />
+    <Finder />
     <Table />
   </div>
 </template>
@@ -9,12 +10,14 @@
 import { defineComponent } from "vue";
 import Header from "./components/Header.vue";
 import Table from "./components/Table.vue";
+import Finder from "./components/Finder.vue";
 
 export default defineComponent({
   name: "App",
   components: {
     Header,
     Table,
+    Finder,
   },
 });
 </script>
@@ -30,12 +33,5 @@ export default defineComponent({
 
 p {
   color: black;
-}
-
-.container {
-  align-content: center;
-  width: 100%;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
 }
 </style>
