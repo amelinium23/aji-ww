@@ -58,15 +58,10 @@ import movies from "../../public/films.json";
 
 export default defineComponent({
   name: "Table",
-  props: {
-    movies: {
-      type: Array,
-      default: () => movies,
-    },
-  },
   data: function () {
     return {
       moviesToShow: 10,
+      movies: movies,
     };
   },
   methods: {
