@@ -1,24 +1,31 @@
-# app
+# Film project
 
-## Project setup
-```
-yarn install
-```
+Folder ten zawiera projekt katalogu filmowego.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+- Finder - komponent odpowiedzialny za wyszukiwarkę
+- CastList - komponent odpowiedzialny za wyświetlanie listy aktorów
+- GenreList - komponent odpowiedzialny za wyświetlanie listy gatunków
+- Table - komponent odpowiedzialny za wyświetlanie tabeli z filmami
+- Header - komponent odpowiedzialny za nagłówek
 
-### Compiles and minifies for production
-```
-yarn build
-```
+Funkcjonalności:
 
-### Lints and fixes files
-```
-yarn lint
-```
+- wyszukiwanie filmów po aktorach, tytułach filmu oraz zakresu roku produkcji.
+- wyświetlanie filmów w tabeli.
+- wyświetlanie listy filmów według aktorów oraz gatunków.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Zainstalowanie wszystkich pakietów
+
+`yarn install`
+
+### Komenda odpalająca projekt
+
+`yarn serve`
+
+### Komenda budująca cały projekt do formy produkcyjnej
+
+`yarn build`
+
+### Komenda do eslinta
+
+`yarn lint`
