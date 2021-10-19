@@ -3,6 +3,7 @@
     <Header title="Katalog filmów" />
     <Finder @search="search" />
     <Table :movies="movies" />
+    <GenreList :movies="movies" />
   </div>
 </template>
 
@@ -11,6 +12,7 @@ import { defineComponent } from "vue";
 import _ from "lodash";
 import Header from "./components/Header.vue";
 import Table from "./components/Table.vue";
+import GenreList from "./components/GenreList.vue";
 import Finder from "./components/Finder.vue";
 import movies from "../public/movies.json";
 import SearchParams from "./types/SearchParams";
@@ -21,6 +23,7 @@ export default defineComponent({
     Header,
     Table,
     Finder,
+    GenreList,
   },
   data() {
     return {

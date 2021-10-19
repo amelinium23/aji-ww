@@ -5,9 +5,8 @@
       class="container"
       style="text-align: left"
       v-for="movie in genreMovies"
-      :key="movie.title"
+      :key="`${movie.title}-${movie.year}`"
     >
-      <h3>Brak gatunku</h3>
       <ol>
         <li v-if="movie.genres.length === 0">
           {{ movie.title }}
@@ -18,14 +17,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import movies from "../../public/movies.json";
+import Movie from "../types/Movie";
+import _ from "lodash";
+import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "GenreList",
+  props: {
+    movies: {
+      type: Array as PropType<Movie[]>,
+      reguired: true,
+    },
+  },
   data() {
     return {
-      genreMovies: movies?.slice(0, 100),
+      genreMovies: _.sampleSize(this.$props.movies, 100),
     };
   },
 });
