@@ -79,7 +79,6 @@ export default defineComponent({
   },
   methods: {
     increment: function () {
-      console.log(this.movies);
       this.moviesToShow += 10;
     },
     decrement: function () {
