@@ -24,6 +24,8 @@
           <input
             id="fromDate"
             type="number"
+            min="1900"
+            max="2018"
             class="form-control"
             placeholder="Wpisz date od roku produkcji"
             v-model="fromDate"
@@ -38,6 +40,8 @@
           <input
             id="toDate"
             type="number"
+            min="1900"
+            max="2018"
             class="form-control"
             placeholder="Wpisz date od roku produkcji"
             v-model="toDate"
@@ -58,7 +62,13 @@
           />
         </div>
       </div>
-      <button class="btn btn-info col-md-3">Wyszukaj</button>
+      <button
+        type="button"
+        class="btn btn-info col-md-3"
+        @click="$emit('search', { title, cast, toDate, fromDate })"
+      >
+        Wyszukaj
+      </button>
     </form>
   </div>
 </template>
@@ -70,10 +80,10 @@ export default defineComponent({
   name: "Finder",
   data: function () {
     return {
-      toDate: Number,
-      fromDate: Number,
-      cast: new String(""),
-      title: new String(""),
+      toDate: "",
+      fromDate: "",
+      cast: "",
+      title: "",
     };
   },
 });

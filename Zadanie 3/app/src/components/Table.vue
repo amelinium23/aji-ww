@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <table class="table table-stripped my-table">
+    <table class="table table-striped table-hover my-table">
       <thead>
         <tr>
           <th>Title</th>
@@ -11,33 +11,30 @@
       </thead>
       <tbody>
         <tr
-          v-for="movieIndex in moviesToShow"
-          :key="movies[movieIndex - 1].title"
+          v-for="movie in movies.slice(0, moviesToShow)"
+          :key="`${movie.title}-${movie.year}`"
         >
-          <td>{{ movies[movieIndex - 1].title }}</td>
-          <td>{{ movies[movieIndex - 1].year }}</td>
-          <td v-if="movies[movieIndex - 1].cast.length == 0">
+          <td>{{ movie.title }}</td>
+          <td>{{ movie.year }}</td>
+          <td v-if="movie.cast.length == 0">
             <p>-</p>
           </td>
-          <td v-else-if="movies[movieIndex - 1].cast.length == 1">
-            <p>{{ movies[movieIndex - 1].cast[0] }}</p>
+          <td v-else-if="movie.cast.length == 1">
+            <p>{{ movie.cast[0] }}</p>
           </td>
           <td v-else>
-            <p v-for="actor in movies[movieIndex - 1].cast" v-bind:key="actor">
+            <p v-for="actor in movie.cast" v-bind:key="actor">
               {{ actor + "\n" }}
             </p>
           </td>
-          <td v-if="movies[movieIndex - 1].genres.length == 0">
+          <td v-if="movie.genres.length == 0">
             <p>-</p>
           </td>
-          <td v-else-if="movies[movieIndex - 1].genres.length == 1">
-            <p>{{ movies[movieIndex - 1].genres[0] }}</p>
+          <td v-else-if="movie.genres.length == 1">
+            <p>{{ movie.genres[0] }}</p>
           </td>
           <td v-else>
-            <p
-              v-for="genre in movies[movieIndex - 1].genres"
-              v-bind:key="genre"
-            >
+            <p v-for="genre in movie.genres" v-bind:key="genre">
               {{ genre + "\n" }}
             </p>
           </td>
@@ -46,36 +43,46 @@
     </table>
     <div class="row">
       <div class="col-md-6 col-more">
-        <button class="btn btn-primary" @click="increment()">
-          Wczytaj więcej
+        <button
+          class="btn btn-primary col-md-3"
+          @click="decrement"
+          v-bind:disabled="moviesToShow === 10"
+        >
+          Zwiń
         </button>
       </div>
       <div class="col-md-6 col-more">
-        <button class="btn btn-primary" @click="decrement()">Zwiń</button>
+        <button class="btn btn-primary col-md-3" @click="increment">
+          Wczytaj więcej
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import movies from "../../public/movies.json";
+import { defineComponent, PropType } from "vue";
+import Movie from "../types/Movie";
 
 export default defineComponent({
   name: "Table",
+  props: {
+    movies: {
+      type: Array as PropType<Movie[]>,
+      required: true,
+    },
+  },
   data: function () {
     return {
       moviesToShow: 10,
-      movies: movies,
     };
   },
   methods: {
     increment: function () {
-      this.movies.slice(0, this.moviesToShow);
+      console.log(this.movies);
       this.moviesToShow += 10;
     },
     decrement: function () {
-      this.movies.slice(this.movies.length, -this.moviesToShow);
       this.moviesToShow -= 10;
     },
   },

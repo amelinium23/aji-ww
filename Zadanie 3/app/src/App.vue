@@ -1,17 +1,19 @@
 <template>
   <div class="container-fluid">
     <Header title="Katalog filmów" />
-    <Finder />
-    <Table />
+    <Finder @search="search" />
+    <Table :movies="movies" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import _ from "lodash";
 import Header from "./components/Header.vue";
 import Table from "./components/Table.vue";
 import Finder from "./components/Finder.vue";
 import movies from "../public/movies.json";
+import SearchParams from "./types/SearchParams";
 
 export default defineComponent({
   name: "App",
@@ -22,8 +24,20 @@ export default defineComponent({
   },
   data() {
     return {
-      movies: movies,
+      movies,
     };
+  },
+  methods: {
+    search({ title, toDate, fromDate, cast }: SearchParams) {
+      this.movies = _.filter(movies, (movie) => {
+        return (
+          (!title || movie.title.includes(title)) &&
+          (!cast || movie.cast.includes(cast)) &&
+          (!fromDate || fromDate >= movie.year) &&
+          (!toDate || movie.year <= toDate)
+        );
+      });
+    },
   },
 });
 </script>
