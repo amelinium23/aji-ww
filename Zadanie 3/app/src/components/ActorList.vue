@@ -1,36 +1,14 @@
 <template>
   <div class="container">
     <h4 class="headerStyle">Filmy wg obsady</h4>
-    <h4 class="headerStyle">Filmy z Adamem Westem</h4>
-    <ol class="headerStyle">
-      <li
-        v-for="movie in adamWestMovies"
-        :key="`${movie.title}-${movie.year}`"
-        class="headerStyle"
-      >
-        {{ movie.title }}
-      </li>
-    </ol>
-    <h4 class="headerStyle">Filmy z Sethem Roganem</h4>
-    <ol class="headerStyle">
-      <li
-        class="headerStyle"
-        v-for="movie in angelineMovies"
-        :key="`${movie.title}-${movie.year}`"
-      >
-        {{ movie.title }}
-      </li>
-    </ol>
-    <h4 class="headerStyle">Filmy z Tomem Cruisem</h4>
-    <ol class="headerStyle">
-      <li
-        class="headerStyle"
-        v-for="movie in tomCruiseMovies"
-        :key="`${movie.title}-${movie.year}`"
-      >
-        {{ movie.title }}
-      </li>
-    </ol>
+    <div class="container" style="text-align: left">
+      <template v-for="(movies, actor) in actorMovies" :key="actor">
+        <h4 class="headerStyle">{{ actor }}</h4>
+        <ol>
+          <li v-for="movie in movies" :key="movie">{{ movie }}</li>
+        </ol>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -38,6 +16,17 @@
 import Movie from "../types/Movie";
 import _ from "lodash";
 import { defineComponent, PropType } from "vue";
+
+const makeDictGreatAgain = (movieArray: Movie[]) => {
+  const dict: { [id: string]: Array<string> } = {};
+  movieArray.forEach((movie) =>
+    movie.cast.forEach((castMember: string) => {
+      if (!dict[castMember]) dict[castMember] = [];
+      dict[castMember].push(movie.title);
+    })
+  );
+  return dict;
+};
 
 export default defineComponent({
   name: "ActorList",
@@ -49,24 +38,7 @@ export default defineComponent({
   },
   data() {
     return {
-      adamWestMovies: _.filter(
-        _.sampleSize(this.$props.movies, 1000),
-        (movie) => {
-          return movie.cast.includes("Adam West");
-        }
-      ),
-      angelineMovies: _.filter(
-        _.sampleSize(this.$props.movies, 1000),
-        (movie) => {
-          return movie.cast.includes("Angelina Jolie");
-        }
-      ),
-      tomCruiseMovies: _.filter(
-        _.sampleSize(this.$props.movies, 1000),
-        (movie) => {
-          return movie.cast.includes("Tom Cruise");
-        }
-      ),
+      actorMovies: makeDictGreatAgain(_.sampleSize(this.$props.movies, 100)),
     };
   },
 });

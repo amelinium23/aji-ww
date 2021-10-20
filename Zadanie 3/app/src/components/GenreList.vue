@@ -2,27 +2,12 @@
   <div class="container-lg genre-list">
     <h3>Filmy wg gatunku</h3>
     <div class="container" style="text-align: left">
-      <h4>Komedia:</h4>
-      <ol>
-        <li
-          v-for="movie in comendyMovies"
-          :key="`${movie.title}-${movie.year}`"
-        >
-          {{ movie.title }}
-        </li>
-      </ol>
-      <h4>Filmy którtkometrażowe:</h4>
-      <ol>
-        <li v-for="movie in shortMovies" :key="`${movie.title}-${movie.year}`">
-          {{ movie.title }}
-        </li>
-      </ol>
-      <h4>Dramat</h4>
-      <ol>
-        <li v-for="movie in dramaMovies" :key="`${movie.title}-${movie.year}`">
-          {{ movie.title }}
-        </li>
-      </ol>
+      <template v-for="(movies, genre) in genreMovies" :key="genre">
+        <h4>{{ genre }}</h4>
+        <ol>
+          <li v-for="movie in movies" :key="movie">{{ movie }}</li>
+        </ol>
+      </template>
     </div>
   </div>
 </template>
@@ -31,6 +16,17 @@
 import Movie from "../types/Movie";
 import _ from "lodash";
 import { defineComponent, PropType } from "vue";
+
+const makeDictGreatAgain = (movieArray: Movie[]) => {
+  const dict: { [id: string]: Array<string> } = {};
+  movieArray.forEach((movie) =>
+    movie.genres.forEach((genre: string) => {
+      if (!dict[genre]) dict[genre] = [];
+      dict[genre].push(movie.title);
+    })
+  );
+  return dict;
+};
 
 export default defineComponent({
   name: "GenreList",
@@ -42,18 +38,7 @@ export default defineComponent({
   },
   data() {
     return {
-      comendyMovies: _.filter(
-        _.sampleSize(this.$props.movies, 100),
-        (movie) => {
-          return movie.genres.includes("Comedy");
-        }
-      ),
-      shortMovies: _.filter(_.sampleSize(this.$props.movies, 100), (movie) => {
-        return movie.genres.includes("Short");
-      }),
-      dramaMovies: _.filter(_.sampleSize(this.$props.movies, 100), (movie) => {
-        return movie.genres.includes("Drama");
-      }),
+      genreMovies: makeDictGreatAgain(_.sampleSize(this.$props.movies, 100)),
     };
   },
 });
