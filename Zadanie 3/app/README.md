@@ -14,6 +14,9 @@ Funkcjonalności:
 - wyświetlanie filmów w tabeli.
 - wyświetlanie listy filmów według aktorów oraz gatunków.
 
+## Instalowanie yarna
+```npm i -g yarn```
+
 ## Zainstalowanie wszystkich pakietów
 
 `yarn install`
