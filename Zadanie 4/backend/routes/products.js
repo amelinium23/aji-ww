@@ -34,23 +34,19 @@ router.get("/:productId", (req, res, next) => {
 router.post("/", (req, res, next) => {
   let body = req.body;
   console.log(req.body);
-  if (body === {}) {
-    console.error(`The body of request is empty`);
-  } else {
-    connection.connect();
-    connection.query(
-      `INSERT INTO products(name, description, weight, price, category_id) VALUES(${body.name}, ${body.description}, ${body.price}, ${body.weight}, ${body.categoryId})`,
-      (err, rows, fields) => {
-        if (err) {
-          console.debug(err.message);
-        } else {
-          console.debug(JSON.stringify(body));
-          res.send(body);
-        }
+  connection.connect();
+  connection.query(
+    `INSERT INTO products(name, description, weight, price, category_id) VALUES(${body.name}, ${body.description}, ${body.price}, ${body.weight}, ${body.categoryId})`,
+    (err, rows, fields) => {
+      if (err) {
+        console.debug(err.message);
+      } else {
+        console.debug(JSON.stringify(body));
+        res.send(body);
       }
-    );
-    connection.end();
-  }
+    }
+  );
+  connection.end();
 });
 
 module.exports = router;
