@@ -30,19 +30,19 @@ router.get("/:productId", (req, res, next) => {
   connection.end();
 });
 
-/** not working for now */
 router.post("/", (req, res, next) => {
-  let body = req.body;
   console.log(req.body);
   connection.connect();
   connection.query(
-    `INSERT INTO products(name, description, weight, price, category_id) VALUES(${body.name}, ${body.description}, ${body.price}, ${body.weight}, ${body.categoryId})`,
+    `INSERT INTO products VALUES(
+      ('${req.body.name}', '${req.body.description}', ${req.body.price}, ${req.body.weight}, ${req.body.category_id})
+    )`,
     (err, rows, fields) => {
       if (err) {
         console.debug(err.message);
       } else {
-        console.debug(JSON.stringify(body));
-        res.send(body);
+        console.debug(rows);
+        res.send(rows);
       }
     }
   );
