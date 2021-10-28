@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS orders(id INT AUTO_INCREMENT PRIMARY KEY,state ENUM (
 INSERT INTO categories(name) VALUES ('fruits');
 INSERT INTO categories(name) VALUES ('vegetables');
 INSERT INTO categories(name) VALUES ('household');
+
 INSERT INTO products(name, description, price, weight, category_id) VALUES('Apple', 'Great apples from Cupertino', 2.90, 1.00, 1);
 INSERT INTO products(name, description, price, weight, category_id) VALUES('Onion', 'Polish onion make Poland great again', 0.90, 1.00, 2);
 INSERT INTO products(name, description, price, weight, category_id) VALUES('Tomato', 'Mmmm, water ', 3.60, 1.00, 2);

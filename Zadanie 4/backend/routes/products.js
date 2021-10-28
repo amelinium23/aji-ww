@@ -14,13 +14,8 @@ router.get("/", (req, res, next) => {
   connection.connect();
 
   connection.query("SELECT * FROM products", (err, rows, fields) => {
-    if (err) {
-      console.debug(err.message);
-    } else {
-      res.send(rows);
-    }
+    err ? console.log(err.message) : res.send(rows);
   });
-
   connection.end();
 });
 
@@ -29,13 +24,10 @@ router.get("/:productId", (req, res, next) => {
   connection.query(
     `SELECT * FROM products WHERE id = ${req.params.productId}`,
     (err, rows, fields) => {
-      if (err) {
-        console.debug(err.message);
-      } else {
-        res.send(rows);
-      }
+      err ? console.log(err.message) : res.send(rows);
     }
   );
+  connection.end();
 });
 
 module.exports = router;
