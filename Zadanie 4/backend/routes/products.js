@@ -64,4 +64,32 @@ router.post("/", (req, res, next) => {
   }
 });
 
+router.put(`/:productId`, (req, res, next) => {
+  let productId = req.params.productId;
+  let body = {
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    weight: req.body.weight,
+    category_id: req.body.category_id,
+  };
+  if (body) {
+    connection.connect();
+    connection.query(
+      `UPDATE products 
+      SET name='${body.name}', description='${body.description}', price=${body.price}, weight=${body.weight}, category_id=${body.category_id} 
+      WHERE id = ${productId}`,
+      (err, rows, fields) => {
+        if (err) {
+          res.send(err.message);
+          connection.end();
+        } else {
+          res.send(rows);
+        }
+      }
+    );
+    connection.end();
+  }
+});
+
 module.exports = router;
