@@ -12,9 +12,9 @@ var connection = mysql.createConnection({
 router.get("/", (req, res, next) => {
   connection.connect();
 
-  connection.query(`SELECT * FROM categories`, (err, rows, fields) => {
-    err ? res.send(err.message) : res.send(rows);
-  });
+  connection.query(`SELECT * FROM categories`, (err, rows, fields) =>
+    err ? res.send(err.message) : res.send(rows)
+  );
 
   connection.end();
 });

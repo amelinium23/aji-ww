@@ -31,22 +31,44 @@ router.get("/:productId", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-  console.log(req.body);
+  const category_list = [];
   connection.connect();
-  connection.query(
-    `INSERT INTO products VALUES(
-      ('${req.body.name}', '${req.body.description}', ${req.body.price}, ${req.body.weight}, ${req.body.category_id})
-    )`,
-    (err, rows, fields) => {
-      if (err) {
-        console.debug(err.message);
-      } else {
-        console.debug(rows);
-        res.send(rows);
-      }
-    }
+  connection.query(`SELECT id FROM categories`, (err, rows, fields) =>
+    err ? res.send(err.message) : (category_list = rows)
   );
   connection.end();
+  let body = {
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    weight: req.body.weight,
+    category_id: req.body.category_id,
+  };
+  if (
+    body.name &&
+    body.description &&
+    body.price > 0 &&
+    body.weight > 0 &&
+    body.category_id in category_list
+  ) {
+    connection.connect();
+    connection.query(
+      `INSERT INTO products(name, description, price, weight, category_id) VALUES(
+        '${body.name}', '${body.description}', ${body.price}, ${body.weight}, ${body.category_id}
+      )`,
+      (err, rows, fields) => {
+        if (err) {
+          console.debug(err.message);
+        } else {
+          connection.commit();
+          res.send(rows);
+        }
+      }
+    );
+    connection.end();
+  } else {
+    res.send(`You provided not validate data: ${JSON.stringify(body)}`);
+  }
 });
 
 module.exports = router;
