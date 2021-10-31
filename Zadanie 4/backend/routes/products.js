@@ -9,7 +9,6 @@ var connection = mysql.createConnection({
   database: "my_db",
 });
 
-/* GET users listing. */
 router.get("/", (req, res, next) => {
   connection.connect();
 
@@ -31,12 +30,6 @@ router.get("/:productId", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-  const category_list = [];
-  connection.connect();
-  connection.query(`SELECT id FROM categories`, (err, rows, fields) =>
-    err ? res.send(err.message) : (category_list = rows)
-  );
-  connection.end();
   let body = {
     name: req.body.name,
     description: req.body.description,
@@ -49,7 +42,7 @@ router.post("/", (req, res, next) => {
     body.description &&
     body.price > 0 &&
     body.weight > 0 &&
-    body.category_id in category_list
+    body.category_id > 0
   ) {
     connection.connect();
     connection.query(
