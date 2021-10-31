@@ -13,9 +13,14 @@ router.get("/", (req, res, next) => {
   connection.connect();
 
   connection.query("SELECT * FROM products", (err, rows, fields) => {
-    err ? console.log(err.message) : res.send(rows);
+    if (err) {
+      connection.end();
+      res.send(err.message);
+    } else {
+      res.send(rows);
+      connection.end();
+    }
   });
-  connection.end();
 });
 
 router.get("/:productId", (req, res, next) => {
@@ -23,10 +28,15 @@ router.get("/:productId", (req, res, next) => {
   connection.query(
     `SELECT * FROM products WHERE id = ${req.params.productId}`,
     (err, rows, fields) => {
-      err ? console.log(err.message) : res.send(rows);
+      if (err) {
+        res.send(err.message);
+        connection.end();
+      } else {
+        res.send(rows);
+        connection.end();
+      }
     }
   );
-  connection.end();
 });
 
 router.post("/", (req, res, next) => {
@@ -51,14 +61,15 @@ router.post("/", (req, res, next) => {
       )`,
       (err, rows, fields) => {
         if (err) {
-          console.debug(err.message);
+          connection.end();
+          res.send(err.message);
         } else {
           connection.commit();
           res.send(rows);
+          connection.end();
         }
       }
     );
-    connection.end();
   } else {
     res.send(`You provided not validate data: ${JSON.stringify(body)}`);
   }
