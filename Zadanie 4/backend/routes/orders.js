@@ -74,7 +74,7 @@ router.put(`/:orderId/stan`, (req, res, next) => {
   let body = {
     status: req.body.status,
   };
-  if (body.status > 0) {
+  if (body.status > 0 && body.status <= 4) {
     connection.query(
       `UPDATE orders SET state=${body.status} WHERE id=${orderId}`,
       (err, rows, fields) => {
