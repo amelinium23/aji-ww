@@ -19,6 +19,24 @@ router.get("/", (req, res, next) => {
   });
 });
 
+router.get("/:orderId", (req, res, next) => {
+  let orderId = req.params.orderId;
+  connection.query(
+    `SELECT * FROM orders WHERE id=${orderId}`,
+    (err, rows, fields) => (err ? res.send(err.message) : res.send(rows))
+  );
+});
+
+router.get(`/:orderId/stan`, (req, res, next) => {
+  let orderId = req.params.orderId;
+  connection.query(
+    `SELECT state FROM orders WHERE id = ${orderId}`,
+    (err, rows, fields) => {
+      err ? res.send(err.message) : res.send(rows);
+    }
+  );
+});
+
 router.post("/", (req, res, next) => {
   let body = {
     state: req.body.state,
@@ -43,6 +61,27 @@ router.post("/", (req, res, next) => {
         } else {
           res.send(`Successfully added order: ${JSON.stringify(body)}`);
           connection.commit();
+        }
+      }
+    );
+  } else {
+    res.send(`You provided not validate data: ${JSON.stringify(body)}`);
+  }
+});
+
+router.put(`/:orderId/stan`, (req, res, next) => {
+  let orderId = req.params.orderId;
+  let body = {
+    status: req.body.status,
+  };
+  if (body.status > 0) {
+    connection.query(
+      `UPDATE orders SET state=${body.status} WHERE id=${orderId}`,
+      (err, rows, fields) => {
+        if (err) {
+          res.send(err.message);
+        } else {
+          res.send(rows);
         }
       }
     );
