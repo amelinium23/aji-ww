@@ -19,4 +19,36 @@ router.get("/", (req, res, next) => {
   });
 });
 
+router.post("/", (req, res, next) => {
+  let body = {
+    state: req.body.state,
+    approval_date: req.body.approval_date,
+    username: req.body.username,
+    email: req.body.email,
+    product_id: req.body.product_id,
+  };
+  if (
+    body.state > 0 &&
+    body.approval_date !== "" &&
+    body.username !== "" &&
+    body.email !== "" &&
+    body.product_id > 0
+  ) {
+    connection.query(
+      `INSERT INTO orders(state, approval_date, username, email, product_id) 
+      VALUES(${body.state}, "${body.approval_date}", '${body.username}', '${body.email}', ${body.product_id}); `,
+      (err, rows, fields) => {
+        if (err) {
+          res.send(err.message);
+        } else {
+          res.send(`Successfully added order: ${JSON.stringify(body)}`);
+          connection.commit();
+        }
+      }
+    );
+  } else {
+    res.send(`You provided not validate data: ${JSON.stringify(body)}`);
+  }
+});
+
 module.exports = router;
