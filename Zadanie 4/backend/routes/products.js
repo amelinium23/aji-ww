@@ -10,30 +10,23 @@ var connection = mysql.createConnection({
 });
 
 router.get("/", (req, res, next) => {
-  connection.connect();
-
   connection.query("SELECT * FROM products", (err, rows, fields) => {
     if (err) {
-      connection.end();
       res.send(err.message);
     } else {
       res.send(rows);
-      connection.end();
     }
   });
 });
 
 router.get("/:productId", (req, res, next) => {
-  connection.connect();
   connection.query(
     `SELECT * FROM products WHERE id = ${req.params.productId}`,
     (err, rows, fields) => {
       if (err) {
         res.send(err.message);
-        connection.end();
       } else {
         res.send(rows);
-        connection.end();
       }
     }
   );
@@ -54,19 +47,16 @@ router.post("/", (req, res, next) => {
     body.weight > 0 &&
     body.category_id > 0
   ) {
-    connection.connect();
     connection.query(
       `INSERT INTO products(name, description, price, weight, category_id) VALUES(
         '${body.name}', '${body.description}', ${body.price}, ${body.weight}, ${body.category_id}
       )`,
       (err, rows, fields) => {
         if (err) {
-          connection.end();
           res.send(err.message);
         } else {
           connection.commit();
           res.send(rows);
-          connection.end();
         }
       }
     );
@@ -85,7 +75,6 @@ router.put(`/:productId`, (req, res, next) => {
     category_id: req.body.category_id,
   };
   if (body) {
-    connection.connect();
     connection.query(
       `UPDATE products 
       SET name='${body.name}', description='${body.description}', price=${body.price}, weight=${body.weight}, category_id=${body.category_id} 
@@ -93,13 +82,11 @@ router.put(`/:productId`, (req, res, next) => {
       (err, rows, fields) => {
         if (err) {
           res.send(err.message);
-          connection.end();
         } else {
           res.send(rows);
         }
       }
     );
-    connection.end();
   }
 });
 

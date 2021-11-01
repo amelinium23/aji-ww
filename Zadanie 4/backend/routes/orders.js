@@ -10,14 +10,11 @@ var connection = mysql.createConnection({
 });
 
 router.get("/", (req, res, next) => {
-  connection.connect();
   connection.query(`SELECT * FROM orders`, (err, rows, fields) => {
     if (err) {
       res.send(err.message);
-      connection.end();
     } else {
       res.send(rows);
-      connection.end();
     }
   });
 });
