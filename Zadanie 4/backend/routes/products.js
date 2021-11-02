@@ -11,24 +11,14 @@ var connection = mysql.createConnection({
 
 router.get("/", (req, res, next) => {
   connection.query("SELECT * FROM products", (err, rows, fields) => {
-    if (err) {
-      res.send(err.message);
-    } else {
-      res.send(rows);
-    }
+    err ? res.send(err.message) : res.send(rows);
   });
 });
 
 router.get("/:productId", (req, res, next) => {
   connection.query(
     `SELECT * FROM products WHERE id = ${req.params.productId}`,
-    (err, rows, fields) => {
-      if (err) {
-        res.send(err.message);
-      } else {
-        res.send(rows);
-      }
-    }
+    (err, rows, fields) => (err ? res.send(err.message) : res.send(rows))
   );
 });
 
@@ -79,13 +69,7 @@ router.put(`/:productId`, (req, res, next) => {
       `UPDATE products 
       SET name='${body.name}', description='${body.description}', price=${body.price}, weight=${body.weight}, category_id=${body.category_id} 
       WHERE id = ${productId}`,
-      (err, rows, fields) => {
-        if (err) {
-          res.send(err.message);
-        } else {
-          res.send(rows);
-        }
-      }
+      (err, rows, fields) => (err ? res.send(err.message) : res.send(rows))
     );
   }
 });

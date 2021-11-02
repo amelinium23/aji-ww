@@ -11,11 +11,7 @@ var connection = mysql.createConnection({
 
 router.get("/", (req, res, next) => {
   connection.query(`SELECT * FROM categories`, (err, rows, fields) => {
-    if (err) {
-      res.send(err.message);
-    } else {
-      res.send(rows);
-    }
+    err ? res.send(err.message) : res.send(rows);
   });
 });
 

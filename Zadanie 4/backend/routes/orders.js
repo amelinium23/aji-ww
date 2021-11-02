@@ -11,11 +11,7 @@ var connection = mysql.createConnection({
 
 router.get("/", (req, res, next) => {
   connection.query(`SELECT * FROM orders`, (err, rows, fields) => {
-    if (err) {
-      res.send(err.message);
-    } else {
-      res.send(rows);
-    }
+    err ? res.send(err.message) : res.send(rows);
   });
 });
 
@@ -77,13 +73,7 @@ router.put(`/:orderId/stan`, (req, res, next) => {
   if (body.status > 0 && body.status <= 4) {
     connection.query(
       `UPDATE orders SET state=${body.status} WHERE id=${orderId}`,
-      (err, rows, fields) => {
-        if (err) {
-          res.send(err.message);
-        } else {
-          res.send(rows);
-        }
-      }
+      (err, rows, fields) => (err ? res.send(err.message) : res.send(rows))
     );
   } else {
     res.send(`You provided not validate data: ${JSON.stringify(body)}`);
