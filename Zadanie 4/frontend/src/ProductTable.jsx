@@ -69,8 +69,8 @@ export default function ProductTable({ whichView }) {
           })}
         </tbody>
       </Table>
-      <Row>
-        <Col md={3}>
+      <Row className="justify-content-md-center">
+        <Col md="auto">
           <Button
             onClick={() => setProductsToShow(productsToShow - 10)}
             disabled={productsToShow === 10 ? true : false}
@@ -79,14 +79,14 @@ export default function ProductTable({ whichView }) {
           </Button>
         </Col>
         {whichView ? (
-          <Col md={3}>
+          <Col md="auto">
             <Button>Dodaj nowy produkt</Button>
           </Col>
         ) : null}
-        <Col md={3}>
+        <Col md="auto">
           <Button disabled={productsForOrder.length === 0}>Zamów</Button>
         </Col>
-        <Col md={3}>
+        <Col md="auto">
           <Button
             onClick={() => setProductsToShow(productsToShow + 10)}
             disabled={products.length > 10 ? false : true}
