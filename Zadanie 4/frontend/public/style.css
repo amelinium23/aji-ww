@@ -10,5 +10,18 @@ h1 {
 }
 
 .button-style {
-  float: right;
+  padding-left: 35%;
+  margin-bottom: 1.25%;
+  align-self: center;
+  align-items: center;
+}
+
+.row {
+  padding-left: 18%;
+}
+
+.container {
+  margin-top: 1vh;
+  margin-left: 10vw;
+  align-items: center;
 }

@@ -1,11 +1,12 @@
 import React from "react";
 import axios from "axios";
-import { Container, Table, Button, Row, Col } from "react-bootstrap";
+import { Container, Table, Button, Row, Col, Form } from "react-bootstrap";
 
-export default function ProductTable() {
+export default function ProductTable({ whichView }) {
   const [products, setProducts] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
   const [productsToShow, setProductsToShow] = React.useState(10);
+  const [productsForOrder, setProductForOrder] = React.useState([]);
 
   React.useEffect(() => {
     const fetchData = () =>
@@ -13,24 +14,32 @@ export default function ProductTable() {
         if (res.status === 200) {
           const data = res.data;
           setProducts(data);
-          console.log(data);
         }
       });
     axios.get(`http://localhost:8000/categories`).then((res) => {
       if (res.status === 200) {
         const data = res.data;
         setCategories(data);
-        console.log(data);
       }
     });
     fetchData();
   }, []);
+
+  const checkInArray = (product) => {
+    if (productsForOrder.includes(product)) {
+      const state = productsForOrder.filter((p) => p.id !== product.id);
+      setProductForOrder([...state]);
+    } else {
+      setProductForOrder([...productsForOrder, product]);
+    }
+  };
 
   return (
     <Container>
       <Table striped hover bordered>
         <thead>
           <tr>
+            <th></th>
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
@@ -42,6 +51,12 @@ export default function ProductTable() {
           {products.slice(0, productsToShow).map((pr) => {
             return (
               <tr key={`${pr.id}-${pr.name}`}>
+                <td>
+                  <Form.Check
+                    type="checkbox"
+                    onClick={() => checkInArray(pr)}
+                  />
+                </td>
                 <td>{pr.name}</td>
                 <td>{pr.description}</td>
                 <td>{pr.price}</td>
@@ -63,13 +78,18 @@ export default function ProductTable() {
             Zwiń
           </Button>
         </Col>
+        {whichView ? (
+          <Col md={3}>
+            <Button>Dodaj nowy produkt</Button>
+          </Col>
+        ) : null}
         <Col md={3}>
-          <Button>Dodaj nowy produkt</Button>
+          <Button disabled={productsForOrder.length === 0}>Zamów</Button>
         </Col>
-        <Col md={6}>
+        <Col md={3}>
           <Button
-            className="button-style"
             onClick={() => setProductsToShow(productsToShow + 10)}
+            disabled={products.length > 10 ? false : true}
           >
             Wczytaj więcej
           </Button>
