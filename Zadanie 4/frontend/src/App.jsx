@@ -1,26 +1,33 @@
 import React from "react";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Nav } from "react-bootstrap";
 import Header from "./Header.jsx";
-import ProductTable from "./ProductTable.jsx";
+import ClientView from "./ClientView.jsx";
+import SellerView from "./SellerView.jsx";
 
 export default function App() {
-  const [isViewChanged, setIsViewChanged] = React.useState(false);
+  const [activeKey, setActiveKey] = React.useState(1);
 
   return (
     <Container fluid>
       <Header text="Shop" />
-      <ProductTable whichView={isViewChanged} />
-      <Row className="justify-content-md-center">
-        <Col md="auto">
-          <Button
-            style={{ marginTop: "1vh" }}
-            variant="dark"
-            onClick={() => setIsViewChanged(!isViewChanged)}
-          >
-            Change view
-          </Button>
-        </Col>
-      </Row>
+      <Container>
+        <Nav
+          variant="tabs"
+          fill
+          defaultActiveKey="clientView"
+          style={{ marginBottom: "1vh" }}
+        >
+          <Nav.Link eventKey="clientView" onClick={() => setActiveKey(1)}>
+            Client View
+          </Nav.Link>
+          <Nav.Link eventKey="sellerView" onClick={() => setActiveKey(2)}>
+            Seller View
+          </Nav.Link>
+        </Nav>
+      </Container>
+      <Container fluid>
+        {activeKey === 1 ? <ClientView /> : <SellerView />}
+      </Container>
     </Container>
   );
 }
