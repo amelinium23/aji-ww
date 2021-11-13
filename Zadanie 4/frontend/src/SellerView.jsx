@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Container, Table, Button, Row, Col, Form } from "react-bootstrap";
+import { Container, Dropdown, Table, Button, Row, Col } from "react-bootstrap";
 
 export default function SellerView() {
   const [products, setProducts] = React.useState([]);
@@ -8,63 +8,49 @@ export default function SellerView() {
   const [orders, setOrders] = React.useState([]);
   const [statuses, setStatuses] = React.useState([]);
   const [productsToShow, setProductsToShow] = React.useState(10);
-  const [productsToEdit, setProductToEdit] = React.useState([]);
 
   React.useEffect(() => {
     const fetchData = async () => {
       axios.get(`http://localhost:8000/products`).then((res) => {
         if (res.status === 200) {
-          const data = res.data;
-          setProducts(data);
+          setProducts(res.data);
         }
       });
-      axios.get(`http://localhost:8000/orders`).then((res) => {
-        if (res.status === 200) {
-          const data = res.data;
-          setOrders(data);
-        }
-      });
+      fetchOrders();
       axios.get(`http://localhost:8000/categories`).then((res) => {
         if (res.status === 200) {
-          const data = res.data;
-          setCategories(data);
+          setCategories(res.data);
         }
       });
       axios.get(`http://localhost:8000/status`).then((res) => {
         if (res.status === 200) {
-          const data = res.data;
-          setStatuses(data);
+          setStatuses(res.data);
         }
       });
     };
     fetchData();
   }, []);
 
-  const checkInArray = (product) => {
-    if (productsToEdit.includes(product)) {
-      const state = productsToEdit.filter((p) => p.id !== product.id);
-      setProductToEdit([...state]);
-    } else {
-      setProductToEdit([...productsToEdit, product]);
-    }
-  };
-
-  const approveOrder = (order) => {
-    axios.put(
-      `http://localhost:8000/orders/${order.id}/stan`,
-      { status: 2 },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+  const fetchOrders = () => {
     axios.get(`http://localhost:8000/orders`).then((res) => {
       if (res.status === 200) {
         const data = res.data;
         setOrders(data);
       }
     });
+  };
+
+  const changeStatus = (order, status) => {
+    axios.put(
+      `http://localhost:8000/orders/${order.id}/stan`,
+      { status: status.id },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    fetchOrders();
   };
 
   const changeStateString = (state) => {
@@ -78,7 +64,7 @@ export default function SellerView() {
       <Table striped hover bordered>
         <thead>
           <tr>
-            <th></th>
+            <th>ID</th>
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
@@ -91,12 +77,7 @@ export default function SellerView() {
             ? products.slice(0, productsToShow).map((pr) => {
                 return (
                   <tr key={`${pr.id}-${pr.name}`}>
-                    <td>
-                      <Form.Check
-                        type="checkbox"
-                        onClick={() => checkInArray(pr)}
-                      />
-                    </td>
+                    <td>{pr.id}</td>
                     <td>{pr.name}</td>
                     <td>{pr.description}</td>
                     <td>{pr.price}</td>
@@ -141,16 +122,16 @@ export default function SellerView() {
         <Table striped hover bordered>
           <thead>
             <tr>
-              <th>Id</th>
+              <th>ID</th>
               <th>State</th>
               <th>Approval Date</th>
               <th>Username</th>
               <th>Email</th>
               <th>Product</th>
-              <th>Approve</th>
+              <th>Change stage of order</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style={{ alignContent: "center" }}>
             {orders
               ? orders.map((or) => {
                   return (
@@ -172,12 +153,25 @@ export default function SellerView() {
                           : or.product_id}
                       </td>
                       <td>
-                        <Button
-                          variant="danger"
-                          onClick={() => approveOrder(or)}
-                        >
-                          Approve
-                        </Button>
+                        <Dropdown>
+                          <Dropdown.Toggle variant="success">
+                            Change state
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                            {statuses.length > 0
+                              ? statuses.map((st) => {
+                                  return (
+                                    <Dropdown.Item
+                                      key={`${st.id}-${st.name}`}
+                                      onClick={() => changeStatus(or, st)}
+                                    >
+                                      {changeStateString(st)}
+                                    </Dropdown.Item>
+                                  );
+                                })
+                              : null}
+                          </Dropdown.Menu>
+                        </Dropdown>
                       </td>
                     </tr>
                   );
