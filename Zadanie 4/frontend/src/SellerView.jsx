@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Container, Dropdown, Table, Button, Row, Col } from "react-bootstrap";
+import AddProductModal from "./AddProductModal.jsx";
 
 export default function SellerView() {
   const [products, setProducts] = React.useState([]);
@@ -8,27 +9,35 @@ export default function SellerView() {
   const [orders, setOrders] = React.useState([]);
   const [statuses, setStatuses] = React.useState([]);
   const [productsToShow, setProductsToShow] = React.useState(10);
+  const [showAddProduct, setShowAddProduct] = React.useState(false);
 
   React.useEffect(() => {
     const fetchData = async () => {
       axios.get(`http://localhost:8000/products`).then((res) => {
         if (res.status === 200) {
-          setProducts(res.data);
+          const data = res.data;
+          setProducts(data);
         }
       });
-      fetchOrders();
       axios.get(`http://localhost:8000/categories`).then((res) => {
         if (res.status === 200) {
-          setCategories(res.data);
+          const data = res.data;
+          setCategories(data);
         }
       });
       axios.get(`http://localhost:8000/status`).then((res) => {
         if (res.status === 200) {
-          setStatuses(res.data);
+          const data = res.data;
+          setStatuses(data);
         }
       });
     };
+    fetchOrders();
     fetchData();
+  }, []);
+
+  React.useEffect(() => {
+    fetchProducts();
   }, []);
 
   const fetchOrders = () => {
@@ -39,6 +48,17 @@ export default function SellerView() {
       }
     });
   };
+
+  const fetchProducts = () => {
+    axios.get(`http://localhost:8000/products`).then((res) => {
+      if (res.status === 200) {
+        const data = res.data;
+        setProducts(data);
+      }
+    });
+  };
+
+  const showModal = () => setShowAddProduct(!showAddProduct);
 
   const changeStatus = (order, status) => {
     axios.put(
@@ -73,7 +93,7 @@ export default function SellerView() {
           </tr>
         </thead>
         <tbody>
-          {products && categories
+          {products.length > 0 && categories.length > 0
             ? products.slice(0, productsToShow).map((pr) => {
                 return (
                   <tr key={`${pr.id}-${pr.name}`}>
@@ -103,7 +123,9 @@ export default function SellerView() {
           </Button>
         </Col>
         <Col md="auto">
-          <Button variant="success outline-secondary">Add new product</Button>
+          <Button variant="success outline-secondary" onClick={showModal}>
+            Add new product
+          </Button>
         </Col>
         <Col md="auto">
           <Button variant="info">Edit product</Button>
@@ -180,6 +202,12 @@ export default function SellerView() {
           </tbody>
         </Table>
       </Container>
+      <AddProductModal
+        show={showAddProduct}
+        onShow={showModal}
+        categories={categories}
+        fetchProducts={fetchProducts}
+      />
     </Container>
   );
 }
