@@ -64,6 +64,7 @@ router.put(`/:productId`, (req, res, next) => {
     weight: req.body.weight,
     category_id: req.body.category_id,
   };
+  console.log(body);
   if (body) {
     connection.query(
       `UPDATE products 

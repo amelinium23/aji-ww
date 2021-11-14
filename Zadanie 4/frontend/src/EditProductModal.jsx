@@ -15,7 +15,7 @@ export default function EditProductModal({
   );
   const [price, setPrice] = React.useState(product.price || 0.0);
   const [weight, setWeight] = React.useState(product.weight || 0.0);
-  const [category, setCategory] = React.useState(product.category_id || 1);
+  const [category, setCategory] = React.useState({} || product.category_id);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -26,11 +26,19 @@ export default function EditProductModal({
       weight: weight,
       category_id: category.id,
     };
-    axios.put(`http://localhost:8000/products/${product.id}`, body, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    if (
+      body.name.length > 0 &&
+      body.description.length > 0 &&
+      body.price > 0 &&
+      body.weight > 0 &&
+      body.category_id
+    ) {
+      axios.put(`http://localhost:8000/products/${product.id}`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
     fetchProducts();
     onClose();
   };
@@ -41,10 +49,10 @@ export default function EditProductModal({
   };
 
   const flush = () => {
-    setName(product.name);
-    setDescription(product.description);
-    setPrice(product.price);
-    setWeight(product.weight);
+    setName("");
+    setDescription("");
+    setPrice(0.0);
+    setWeight(0.0);
   };
 
   const findCategoryObject = (category) =>
@@ -63,6 +71,7 @@ export default function EditProductModal({
             <Form.Control
               type="text"
               value={name}
+              minLength={1}
               onChange={(e) => setName(e.target.value)}
             />
           </FloatingLabel>
@@ -70,6 +79,7 @@ export default function EditProductModal({
             <Form.Control
               as="textarea"
               rows={3}
+              minLength={1}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -94,8 +104,9 @@ export default function EditProductModal({
           </FloatingLabel>
           <FloatingLabel label="Category" style={{ marginBottom: "1vh" }}>
             <Form.Select
-              value={categories.find((ct) => ct.id === category.id)}
+              value={category.name}
               onChange={(e) => setCategory(findCategoryObject(e.target.value))}
+              minLength={1}
             >
               {categories.length > 0
                 ? categories.map((ct) => (

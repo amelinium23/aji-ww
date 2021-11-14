@@ -23,11 +23,19 @@ export default function AddProductModal({
       weight: weight,
       category_id: category.id,
     };
-    axios.post(`http://localhost:8000/products`, body, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    if (
+      body.name.length > 0 &&
+      body.description.length > 0 &&
+      body.price > 0 &&
+      body.weight > 0 &&
+      body.category_id
+    ) {
+      axios.post(`http://localhost:8000/products`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
     fetchProducts();
     onClose();
   };
@@ -58,6 +66,7 @@ export default function AddProductModal({
             <Form.Control
               type="text"
               value={formName}
+              minLength={1}
               onChange={(e) => setFormName(e.target.value)}
             />
           </FloatingLabel>
@@ -66,6 +75,7 @@ export default function AddProductModal({
               as="textarea"
               rows={3}
               value={description}
+              minLength={1}
               onChange={(e) => setDescription(e.target.value)}
             />
           </FloatingLabel>
