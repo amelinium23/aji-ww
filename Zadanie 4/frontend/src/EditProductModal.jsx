@@ -15,7 +15,7 @@ export default function EditProductModal({
   );
   const [price, setPrice] = React.useState(product.price || 0.0);
   const [weight, setWeight] = React.useState(product.weight || 0.0);
-  const [category, setCategory] = React.useState(product.category_id || "");
+  const [category, setCategory] = React.useState(product.category_id || 1);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -41,10 +41,10 @@ export default function EditProductModal({
   };
 
   const flush = () => {
-    setName(product.name || "");
-    setDescription(product.description || "");
-    setPrice(product.price || 0.0);
-    setWeight(product.price || 0.0);
+    setName(product.name);
+    setDescription(product.description);
+    setPrice(product.price);
+    setWeight(product.weight);
   };
 
   const findCategoryObject = (category) =>
@@ -94,7 +94,7 @@ export default function EditProductModal({
           </FloatingLabel>
           <FloatingLabel label="Category" style={{ marginBottom: "1vh" }}>
             <Form.Select
-              value={categories.find((ct) => ct.id === category)}
+              value={categories.find((ct) => ct.id === category.id)}
               onChange={(e) => setCategory(findCategoryObject(e.target.value))}
             >
               {categories.length > 0
