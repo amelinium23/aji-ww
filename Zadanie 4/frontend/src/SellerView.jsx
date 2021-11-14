@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Container, Dropdown, Table, Button, Row, Col } from "react-bootstrap";
 import AddProductModal from "./AddProductModal.jsx";
+import EditProductModal from "./EditProductModal.jsx";
 
 export default function SellerView() {
   const [products, setProducts] = React.useState([]);
@@ -10,6 +11,8 @@ export default function SellerView() {
   const [statuses, setStatuses] = React.useState([]);
   const [productsToShow, setProductsToShow] = React.useState(10);
   const [showAddProduct, setShowAddProduct] = React.useState(false);
+  const [showEditProduct, setShowEditProduct] = React.useState(false);
+  const [productToEdit, setProductToEdit] = React.useState(products[0] || {});
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +61,8 @@ export default function SellerView() {
     });
   };
 
-  const showModal = () => setShowAddProduct(!showAddProduct);
+  const showAddProductModal = () => setShowAddProduct(!showAddProduct);
+  const showEditProductModal = () => setShowEditProduct(!showEditProduct);
 
   const changeStatus = (order, status) => {
     axios.put(
@@ -71,6 +75,11 @@ export default function SellerView() {
       }
     );
     fetchOrders();
+  };
+
+  const editProduct = (product) => {
+    showEditProductModal();
+    setProductToEdit(product);
   };
 
   const changeStateString = (state) => {
@@ -90,6 +99,7 @@ export default function SellerView() {
             <th>Price</th>
             <th>Weight</th>
             <th>Category</th>
+            <th>Edit product</th>
           </tr>
         </thead>
         <tbody>
@@ -107,6 +117,11 @@ export default function SellerView() {
                         ? categories.find((ct) => ct.id === pr.category_id).name
                         : pr.category_id}
                     </td>
+                    <td>
+                      <Button variant="success" onClick={() => editProduct(pr)}>
+                        Edit product
+                      </Button>
+                    </td>
                   </tr>
                 );
               })
@@ -123,12 +138,12 @@ export default function SellerView() {
           </Button>
         </Col>
         <Col md="auto">
-          <Button variant="success outline-secondary" onClick={showModal}>
+          <Button
+            variant="success outline-secondary"
+            onClick={showAddProductModal}
+          >
             Add new product
           </Button>
-        </Col>
-        <Col md="auto">
-          <Button variant="info">Edit product</Button>
         </Col>
         <Col md="auto">
           <Button
@@ -204,9 +219,16 @@ export default function SellerView() {
       </Container>
       <AddProductModal
         show={showAddProduct}
-        onShow={showModal}
+        onShow={showAddProductModal}
         categories={categories}
         fetchProducts={fetchProducts}
+      />
+      <EditProductModal
+        show={showEditProduct}
+        onShow={showEditProductModal}
+        fetchProducts={fetchProducts}
+        categories={categories}
+        product={productToEdit}
       />
     </Container>
   );
