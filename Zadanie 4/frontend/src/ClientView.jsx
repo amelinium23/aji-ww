@@ -1,11 +1,16 @@
 import React from "react";
 import axios from "axios";
-import { Container, Table, Row, Col, Button } from "react-bootstrap";
+import { Container, Table, Row, Col, Button, Form } from "react-bootstrap";
+import NewOrderModal from "./NewOrderModal.jsx";
+import ListView from "./ListView.jsx";
 
 export default function SellerView() {
+  const [showOrderModal, setShowOrderModal] = React.useState(false);
   const [productsToShow, setProductsToShow] = React.useState(10);
+  const [productsForOrder, setProductsForOrder] = React.useState([]);
   const [products, setProducts] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
+  const [name, setName] = React.useState("");
 
   React.useEffect(() => {
     fetchProducts();
@@ -30,13 +35,48 @@ export default function SellerView() {
     });
   };
 
+  const addProduct = (product) => {
+    if (productsForOrder.includes(product)) {
+      const rest = productsForOrder.filter((pr) => pr.id !== product.id);
+      setProductsForOrder([...rest]);
+    } else {
+      setProductsForOrder([...productsForOrder, product]);
+    }
+  };
+
+  const appearOrderModal = () => setShowOrderModal(!showOrderModal);
+
+  const totalPrice = (products) => {
+    let total = 0;
+    products.forEach((pr) => {
+      total += pr.price;
+    });
+    return total.toFixed(2);
+  };
+
   return (
     <Container>
+      <Row
+        className="justify-content-md-center"
+        style={{ marginBottom: "1vh" }}
+      >
+        <Col md="auto">
+          <h4>Choose a product</h4>
+        </Col>
+      </Row>
       <Table striped hover bordered>
         <thead>
           <tr>
             <th>Want it?</th>
-            <th>Name</th>
+            <th>
+              Name
+              <Form.Control
+                type="text"
+                value={name}
+                placeholder="Type name you looking for"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </th>
             <th>Description</th>
             <th>Price</th>
             <th>Weight</th>
@@ -45,20 +85,22 @@ export default function SellerView() {
         </thead>
         <tbody>
           {products.slice(0, productsToShow).map((pr) => {
-            return (
+            return pr.name.includes(name) ? (
               <tr key={`${pr.id}-${pr.name}`}>
-                <td></td>
+                <td>
+                  <Form.Check onClick={() => addProduct(pr)} inline />
+                </td>
                 <td>{pr.name}</td>
                 <td>{pr.description}</td>
-                <td>{pr.price}</td>
-                <td>{pr.weight}</td>
+                <td>{pr.price.toFixed(2)}</td>
+                <td>{pr.weight.toFixed(2)}</td>
                 <td>
                   {categories.length > 0
                     ? categories.find((ct) => ct.id === pr.category_id).name
                     : null}
                 </td>
               </tr>
-            );
+            ) : null;
           })}
         </tbody>
       </Table>
@@ -71,15 +113,47 @@ export default function SellerView() {
             Collapse
           </Button>
         </Col>
+
         <Col md="auto">
           <Button
             onClick={() => setProductsToShow(productsToShow + 10)}
-            disabled={products.length > 10 ? false : true}
+            disabled={
+              products.length > 10 && productsToShow < products.length
+                ? false
+                : true
+            }
           >
             Load more
           </Button>
         </Col>
       </Row>
+      <Row className="justify-content-md-center" style={{ marginTop: "1vh" }}>
+        <Col md="auto">
+          <h5>Chosen products</h5>
+        </Col>
+      </Row>
+      <ListView products={productsForOrder} />
+      <Row className="justify-content-md-center" style={{ marginTop: "1vh" }}>
+        <Col md="auto">
+          <h5>Total price: {totalPrice(productsForOrder)} zł</h5>
+        </Col>
+      </Row>
+      <Row className="justify-content-md-center" style={{ marginTop: "1vh" }}>
+        <Col md="auto">
+          <Button
+            variant="success"
+            disabled={productsForOrder.length === 0}
+            onClick={appearOrderModal}
+          >
+            Order now
+          </Button>
+        </Col>
+      </Row>
+      <NewOrderModal
+        products={productsForOrder}
+        show={showOrderModal}
+        onShow={appearOrderModal}
+      />
     </Container>
   );
 }

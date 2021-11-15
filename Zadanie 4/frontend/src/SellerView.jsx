@@ -110,8 +110,8 @@ export default function SellerView() {
                     <td>{pr.id}</td>
                     <td>{pr.name}</td>
                     <td>{pr.description}</td>
-                    <td>{pr.price}</td>
-                    <td>{pr.weight}</td>
+                    <td>{pr.price.toFixed(2)}</td>
+                    <td>{pr.weight.toFixed(2)}</td>
                     <td>
                       {categories.length > 0
                         ? categories.find((ct) => ct.id === pr.category_id).name
@@ -148,7 +148,11 @@ export default function SellerView() {
         <Col md="auto">
           <Button
             onClick={() => setProductsToShow(productsToShow + 10)}
-            disabled={products.length > 10 ? false : true}
+            disabled={
+              products.length > 10 && productsToShow < products.length
+                ? false
+                : true
+            }
           >
             Load more
           </Button>
