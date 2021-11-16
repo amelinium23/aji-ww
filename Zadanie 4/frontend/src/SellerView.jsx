@@ -187,7 +187,7 @@ export default function SellerView() {
                     </td>
                     <td>
                       {or.approval_date === null
-                        ? "Niezatwierdzone"
+                        ? "Unapproved"
                         : or.approval_date}
                     </td>
                     <td>{or.username}</td>

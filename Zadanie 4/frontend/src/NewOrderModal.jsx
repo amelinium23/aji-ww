@@ -15,6 +15,7 @@ export default function NewOrderModal({ show, onShow, products }) {
         state: 1,
         username: username,
         email: mail,
+        phoneNumber: phoneNumber,
         product_id: pr.id,
       };
       axios.post(`http://localhost:8000/orders`, body, {

@@ -38,17 +38,20 @@ router.post("/", (req, res, next) => {
     state: req.body.state,
     username: req.body.username,
     email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
     product_id: req.body.product_id,
   };
+  console.log(body);
   if (
     body.state > 0 &&
     body.username !== "" &&
     body.email !== "" &&
-    body.product_id > 0
+    body.product_id > 0 &&
+    body.phoneNumber !== ""
   ) {
     connection.query(
-      `INSERT INTO orders(state, username, email, product_id) 
-      VALUES(${body.state}, '${body.username}', '${body.email}', ${body.product_id})`,
+      `INSERT INTO orders(state, username, email, product_id, phoneNumber) 
+      VALUES(${body.state}, '${body.username}', '${body.email}', ${body.product_id}, ${body.phoneNumber})`,
       (err, rows, fields) => {
         if (err) {
           res.send(err.message);
