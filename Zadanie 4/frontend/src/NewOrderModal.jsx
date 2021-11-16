@@ -1,8 +1,35 @@
 import React from "react";
-import { Modal, Form, FloatingLabel } from "react-bootstrap";
+import axios from "axios";
+import { Button, Modal, Form, FloatingLabel } from "react-bootstrap";
 
 export default function NewOrderModal({ show, onShow, products }) {
-  console.log(products);
+  const [username, setUsername] = React.useState("");
+  const [mail, setMail] = React.useState("");
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    products.forEach((pr) => {
+      let body = {
+        state: 1,
+        username: username,
+        email: mail,
+        product_id: pr.id,
+      };
+      axios.post(`http://localhost:8000/orders`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    });
+    flush();
+    onClose();
+  };
+
+  const flush = () => {
+    setUsername("");
+    setMail("");
+  };
+
   const onClose = () => {
     onShow();
   };
@@ -13,8 +40,38 @@ export default function NewOrderModal({ show, onShow, products }) {
         <Modal.Title>Order details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
-          <FloatingLabel label=""></FloatingLabel>
+        <Form onSubmit={onSubmit}>
+          <FloatingLabel label="Username" style={{ marginBottom: "1vh" }}>
+            <Form.Control
+              type="text"
+              minLength={1}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </FloatingLabel>
+          <FloatingLabel label="Mail" style={{ marginBottom: "1vh" }}>
+            <Form.Control
+              type="text"
+              minLength={1}
+              value={mail}
+              onChange={(e) => setMail(e.target.value)}
+            />
+          </FloatingLabel>
+          <Button
+            variant="success"
+            type="submit"
+            onClick={onSubmit}
+            style={{ float: "left", marginRight: "1wv" }}
+          >
+            Buy
+          </Button>
+          <Button
+            variant="danger"
+            style={{ float: "right", marginLeft: "1wv" }}
+            onClick={onClose}
+          >
+            Close
+          </Button>
         </Form>
       </Modal.Body>
     </Modal>

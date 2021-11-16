@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS products(id INT AUTO_INCREMENT PRIMARY KEY, name TEXT, description TEXT, price DECIMAL(4,2), weight DECIMAL(3,2), category_id INT NOT NULL,FOREIGN KEY (category_id) REFERENCES categories(id));
 CREATE TABLE IF NOT EXISTS categories(id INT AUTO_INCREMENT PRIMARY KEY, name TEXT)
 CREATE TABLE IF NOT EXISTS statuses(id INT AUTO_INCREMENT PRIMARY KEY, name ENUM ('NIEZATWIERDZONE', 'ZATWIERDZONE', 'ANULOWANE', 'ZREALIZOWANE'));
-CREATE TABLE orders(id INT AUTO_INCREMENT PRIMARY KEY,state INT, approval_date DATE,username TEXT,email TEXT, product_id INT,FOREIGN KEY (state) REFERENCES statuses(id));
+CREATE TABLE orders(id INT AUTO_INCREMENT PRIMARY KEY,state INT, approval_date TEXT,username TEXT,email TEXT, product_id INT,FOREIGN KEY (state) REFERENCES statuses(id));
 
 INSERT INTO categories(name) VALUES ('fruits');
 INSERT INTO categories(name) VALUES ('vegetables');

@@ -13,6 +13,7 @@ export default function SellerView() {
   const [showAddProduct, setShowAddProduct] = React.useState(false);
   const [showEditProduct, setShowEditProduct] = React.useState(false);
   const [productToEdit, setProductToEdit] = React.useState(products[0] || {});
+  console.log(orders);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +68,7 @@ export default function SellerView() {
   const changeStatus = (order, status) => {
     axios.put(
       `http://localhost:8000/orders/${order.id}/stan`,
-      { status: status.id },
+      { status: status.id, approval_date: new Date().toLocaleDateString() },
       {
         headers: {
           "Content-Type": "application/json",
@@ -185,7 +186,11 @@ export default function SellerView() {
                             )
                           : or.state}
                       </td>
-                      <td>{new Date(or.approval_date).toLocaleDateString()}</td>
+                      <td>
+                        {or.approval_date === null
+                          ? "Niezatwierdzone"
+                          : or.approval_date}
+                      </td>
                       <td>{or.username}</td>
                       <td>{or.email}</td>
                       <td>
@@ -199,8 +204,20 @@ export default function SellerView() {
                             Change state
                           </Dropdown.Toggle>
                           <Dropdown.Menu>
-                            {statuses.length > 0
-                              ? statuses.map((st) => {
+                            {statuses.length > 0 && or.state >= 2
+                              ? statuses
+                                  .filter((st) => st.id !== 1 && st.id !== 2)
+                                  .map((st) => {
+                                    return (
+                                      <Dropdown.Item
+                                        key={`${st.id}-${st.name}`}
+                                        onClick={() => changeStatus(or, st)}
+                                      >
+                                        {changeStateString(st)}
+                                      </Dropdown.Item>
+                                    );
+                                  })
+                              : statuses.map((st) => {
                                   return (
                                     <Dropdown.Item
                                       key={`${st.id}-${st.name}`}
@@ -209,8 +226,7 @@ export default function SellerView() {
                                       {changeStateString(st)}
                                     </Dropdown.Item>
                                   );
-                                })
-                              : null}
+                                })}
                           </Dropdown.Menu>
                         </Dropdown>
                       </td>

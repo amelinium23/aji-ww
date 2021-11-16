@@ -36,27 +36,27 @@ router.get(`/:orderId/stan`, (req, res, next) => {
 router.post("/", (req, res, next) => {
   let body = {
     state: req.body.state,
-    approval_date: req.body.approval_date,
     username: req.body.username,
     email: req.body.email,
     product_id: req.body.product_id,
   };
+  console.log(body);
   if (
     body.state > 0 &&
-    body.approval_date !== "" &&
     body.username !== "" &&
     body.email !== "" &&
     body.product_id > 0
   ) {
+    console.log(body);
     connection.query(
-      `INSERT INTO orders(state, approval_date, username, email, product_id) 
-      VALUES(${body.state}, "${body.approval_date}", '${body.username}', '${body.email}', ${body.product_id}); `,
+      `INSERT INTO orders(state, username, email, product_id) 
+      VALUES(${body.state}, '${body.username}', '${body.email}', ${body.product_id})`,
       (err, rows, fields) => {
         if (err) {
           res.send(err.message);
         } else {
-          res.send(`Successfully added order: ${JSON.stringify(body)}`);
           connection.commit();
+          res.send(`Successfully added order: ${JSON.stringify(body)}`);
         }
       }
     );
@@ -69,10 +69,11 @@ router.put(`/:orderId/stan`, (req, res, next) => {
   let orderId = req.params.orderId;
   let body = {
     status: req.body.status,
+    approval_date: req.body.approval_date,
   };
   if (body.status > 0 && body.status <= 4) {
     connection.query(
-      `UPDATE orders SET state=${body.status} WHERE id=${orderId}`,
+      `UPDATE orders SET state=${body.status}, approval_date='${body.approval_date}' WHERE id=${orderId}`,
       (err, rows, fields) => (err ? res.send(err.message) : res.send(rows))
     );
   } else {
