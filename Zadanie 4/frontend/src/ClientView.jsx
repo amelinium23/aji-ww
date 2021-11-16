@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Container, Table, Row, Col, Button, Form } from "react-bootstrap";
 import NewOrderModal from "./NewOrderModal.jsx";
-import ListView from "./ListView.jsx";
+import OrderDetails from "./OrderDetails.jsx";
 
 export default function SellerView() {
   const [showOrderModal, setShowOrderModal] = React.useState(false);
@@ -46,14 +46,6 @@ export default function SellerView() {
 
   const appearOrderModal = () => setShowOrderModal(!showOrderModal);
 
-  const totalPrice = (products) => {
-    let total = 0;
-    products.forEach((pr) => {
-      total += pr.price;
-    });
-    return total.toFixed(2);
-  };
-
   return (
     <Container>
       <Row
@@ -78,8 +70,8 @@ export default function SellerView() {
               />
             </th>
             <th>Description</th>
-            <th>Price</th>
-            <th>Weight</th>
+            <th>Price (PLN)</th>
+            <th>Weight (kg)</th>
             <th>Category</th>
           </tr>
         </thead>
@@ -127,17 +119,7 @@ export default function SellerView() {
           </Button>
         </Col>
       </Row>
-      <Row className="justify-content-md-center" style={{ marginTop: "1vh" }}>
-        <Col md="auto">
-          <h5>Chosen products</h5>
-        </Col>
-      </Row>
-      <ListView products={productsForOrder} />
-      <Row className="justify-content-md-center" style={{ marginTop: "1vh" }}>
-        <Col md="auto">
-          <h5>Total price: {totalPrice(productsForOrder)} zł</h5>
-        </Col>
-      </Row>
+      <OrderDetails products={productsForOrder} />
       <Row className="justify-content-md-center" style={{ marginTop: "1vh" }}>
         <Col md="auto">
           <Button

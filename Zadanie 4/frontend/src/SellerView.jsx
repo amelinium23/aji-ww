@@ -13,7 +13,6 @@ export default function SellerView() {
   const [showAddProduct, setShowAddProduct] = React.useState(false);
   const [showEditProduct, setShowEditProduct] = React.useState(false);
   const [productToEdit, setProductToEdit] = React.useState(products[0] || {});
-  console.log(orders);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -97,8 +96,8 @@ export default function SellerView() {
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
-            <th>Price</th>
-            <th>Weight</th>
+            <th>Price (PLN)</th>
+            <th>Weight (kg)</th>
             <th>Category</th>
             <th>Edit product</th>
           </tr>
@@ -159,65 +158,56 @@ export default function SellerView() {
           </Button>
         </Col>
       </Row>
-      <Container>
-        <h4>Orders</h4>
-        <Table striped hover bordered>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>State</th>
-              <th>Approval Date</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Product</th>
-              <th>Change stage of order</th>
-            </tr>
-          </thead>
-          <tbody style={{ alignContent: "center" }}>
-            {orders
-              ? orders.map((or) => {
-                  return (
-                    <tr key={`${or.id}-${or.email}`}>
-                      <td>{or.id}</td>
-                      <td>
-                        {statuses.length > 0
-                          ? changeStateString(
-                              statuses.find((st) => or.state === st.id)
-                            )
-                          : or.state}
-                      </td>
-                      <td>
-                        {or.approval_date === null
-                          ? "Niezatwierdzone"
-                          : or.approval_date}
-                      </td>
-                      <td>{or.username}</td>
-                      <td>{or.email}</td>
-                      <td>
-                        {products.length > 0
-                          ? products.find((pr) => pr.id === or.product_id).name
-                          : or.product_id}
-                      </td>
-                      <td>
-                        <Dropdown>
-                          <Dropdown.Toggle variant="success">
-                            Change state
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu>
-                            {statuses.length > 0 && or.state >= 2
-                              ? statuses
-                                  .filter((st) => st.id !== 1 && st.id !== 2)
-                                  .map((st) => {
-                                    return (
-                                      <Dropdown.Item
-                                        key={`${st.id}-${st.name}`}
-                                        onClick={() => changeStatus(or, st)}
-                                      >
-                                        {changeStateString(st)}
-                                      </Dropdown.Item>
-                                    );
-                                  })
-                              : statuses.map((st) => {
+      <h4>Orders</h4>
+      <Table striped hover bordered>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>State</th>
+            <th>Approval Date</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone number</th>
+            <th>Product</th>
+            <th>Change stage of order</th>
+          </tr>
+        </thead>
+        <tbody style={{ alignContent: "center" }}>
+          {orders
+            ? orders.map((or) => {
+                return (
+                  <tr key={`${or.id}-${or.email}`}>
+                    <td>{or.id}</td>
+                    <td>
+                      {statuses.length > 0
+                        ? changeStateString(
+                            statuses.find((st) => or.state === st.id)
+                          )
+                        : or.state}
+                    </td>
+                    <td>
+                      {or.approval_date === null
+                        ? "Niezatwierdzone"
+                        : or.approval_date}
+                    </td>
+                    <td>{or.username}</td>
+                    <td>{or.email}</td>
+                    <td>{or.phoneNumber === null ? "-" : or.phoneNumber}</td>
+                    <td>
+                      {products.length > 0
+                        ? products.find((pr) => pr.id === or.product_id).name
+                        : or.product_id}
+                    </td>
+                    <td>
+                      <Dropdown>
+                        <Dropdown.Toggle variant="success">
+                          Change state
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          {statuses.length > 0 && or.state >= 2
+                            ? statuses
+                                .filter((st) => st.id !== 1 && st.id !== 2)
+                                .map((st) => {
                                   return (
                                     <Dropdown.Item
                                       key={`${st.id}-${st.name}`}
@@ -226,17 +216,26 @@ export default function SellerView() {
                                       {changeStateString(st)}
                                     </Dropdown.Item>
                                   );
-                                })}
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      </td>
-                    </tr>
-                  );
-                })
-              : null}
-          </tbody>
-        </Table>
-      </Container>
+                                })
+                            : statuses.map((st) => {
+                                return (
+                                  <Dropdown.Item
+                                    key={`${st.id}-${st.name}`}
+                                    onClick={() => changeStatus(or, st)}
+                                  >
+                                    {changeStateString(st)}
+                                  </Dropdown.Item>
+                                );
+                              })}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </td>
+                  </tr>
+                );
+              })
+            : null}
+        </tbody>
+      </Table>
       <AddProductModal
         show={showAddProduct}
         onShow={showAddProductModal}

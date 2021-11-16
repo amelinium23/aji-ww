@@ -37,6 +37,7 @@ router.post("/", (req, res, next) => {
     body.weight > 0 &&
     body.category_id > 0
   ) {
+    console.log(body);
     connection.query(
       `INSERT INTO products(name, description, price, weight, category_id) VALUES(
         '${body.name}', '${body.description}', ${body.price}, ${body.weight}, ${body.category_id}
@@ -64,7 +65,6 @@ router.put(`/:productId`, (req, res, next) => {
     weight: req.body.weight,
     category_id: req.body.category_id,
   };
-  console.log(body);
   if (body) {
     connection.query(
       `UPDATE products 

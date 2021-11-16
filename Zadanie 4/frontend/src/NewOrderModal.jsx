@@ -1,10 +1,12 @@
 import React from "react";
 import axios from "axios";
 import { Button, Modal, Form, FloatingLabel } from "react-bootstrap";
+import OrderDetails from "./OrderDetails.jsx";
 
 export default function NewOrderModal({ show, onShow, products }) {
   const [username, setUsername] = React.useState("");
   const [mail, setMail] = React.useState("");
+  const [phoneNumber, setPhoneNumber] = React.useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ export default function NewOrderModal({ show, onShow, products }) {
   const flush = () => {
     setUsername("");
     setMail("");
+    setPhoneNumber("");
   };
 
   const onClose = () => {
@@ -41,6 +44,7 @@ export default function NewOrderModal({ show, onShow, products }) {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={onSubmit}>
+          <OrderDetails products={products} />
           <FloatingLabel label="Username" style={{ marginBottom: "1vh" }}>
             <Form.Control
               type="text"
@@ -55,6 +59,14 @@ export default function NewOrderModal({ show, onShow, products }) {
               minLength={1}
               value={mail}
               onChange={(e) => setMail(e.target.value)}
+            />
+          </FloatingLabel>
+          <FloatingLabel label="Phone number" style={{ marginBottom: "1vh" }}>
+            <Form.Control
+              type="text"
+              minLength={1}
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
             />
           </FloatingLabel>
           <Button

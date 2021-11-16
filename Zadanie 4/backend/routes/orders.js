@@ -40,14 +40,12 @@ router.post("/", (req, res, next) => {
     email: req.body.email,
     product_id: req.body.product_id,
   };
-  console.log(body);
   if (
     body.state > 0 &&
     body.username !== "" &&
     body.email !== "" &&
     body.product_id > 0
   ) {
-    console.log(body);
     connection.query(
       `INSERT INTO orders(state, username, email, product_id) 
       VALUES(${body.state}, '${body.username}', '${body.email}', ${body.product_id})`,

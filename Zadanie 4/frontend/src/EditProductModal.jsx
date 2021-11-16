@@ -9,13 +9,11 @@ export default function EditProductModal({
   fetchProducts,
   categories,
 }) {
-  const [name, setName] = React.useState(product.name || "");
-  const [description, setDescription] = React.useState(
-    product.description || ""
-  );
-  const [price, setPrice] = React.useState(product.price || 0.0);
-  const [weight, setWeight] = React.useState(product.weight || 0.0);
-  const [category, setCategory] = React.useState({} || product.category_id);
+  const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [price, setPrice] = React.useState("");
+  const [weight, setWeight] = React.useState("");
+  const [category, setCategory] = React.useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();

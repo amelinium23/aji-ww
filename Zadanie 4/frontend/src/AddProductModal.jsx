@@ -12,7 +12,7 @@ export default function AddProductModal({
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState(0.0);
   const [weight, setWeight] = React.useState(0.0);
-  const [category, setCategory] = React.useState("");
+  const [category, setCategory] = React.useState(categories[0] || "");
 
   const onSubmit = (e) => {
     e.preventDefault();
