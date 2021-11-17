@@ -22,11 +22,17 @@ export default function NewOrderModal({ show, onShow, products }) {
         phoneNumber: phoneNumber,
         product_id: pr.id,
       };
-      axios.post(`http://localhost:8000/orders`, body, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      if (
+        body.username.length > 0 &&
+        body.email.length > 0 &&
+        phoneNumber.length > 0
+      ) {
+        axios.post(`http://localhost:8000/orders`, body, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      }
     });
     flush();
     onClose();
@@ -57,6 +63,7 @@ export default function NewOrderModal({ show, onShow, products }) {
                 type="text"
                 minLength={1}
                 value={username}
+                required={true}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </FloatingLabel>
@@ -65,14 +72,16 @@ export default function NewOrderModal({ show, onShow, products }) {
                 type="text"
                 minLength={1}
                 value={mail}
+                required={true}
                 onChange={(e) => setMail(e.target.value)}
               />
             </FloatingLabel>
             <FloatingLabel label="Phone number" style={{ marginBottom: "1vh" }}>
               <Form.Control
-                type="text"
+                type="number"
                 minLength={1}
                 value={phoneNumber}
+                required={true}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </FloatingLabel>

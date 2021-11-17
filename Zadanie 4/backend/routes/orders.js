@@ -41,13 +41,12 @@ router.post("/", (req, res, next) => {
     phoneNumber: req.body.phoneNumber,
     product_id: req.body.product_id,
   };
-  console.log(body);
   if (
     body.state > 0 &&
-    body.username !== "" &&
-    body.email !== "" &&
+    body.username.length > 0 &&
+    body.email.length > 0 &&
     body.product_id > 0 &&
-    body.phoneNumber !== ""
+    body.phoneNumber.length > 0
   ) {
     connection.query(
       `INSERT INTO orders(state, username, email, product_id, phoneNumber) 

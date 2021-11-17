@@ -64,12 +64,13 @@ export default function EditProductModal({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit} validated>
           <FloatingLabel label="Name" style={{ marginBottom: "1vh" }}>
             <Form.Control
               type="text"
               value={name}
               minLength={1}
+              required={true}
               onChange={(e) => setName(e.target.value)}
             />
           </FloatingLabel>
@@ -78,6 +79,7 @@ export default function EditProductModal({
               as="textarea"
               rows={3}
               minLength={1}
+              required={true}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -88,6 +90,7 @@ export default function EditProductModal({
               min={0}
               value={price}
               step="0.1"
+              required={true}
               onChange={(e) => setPrice(parseFloat(e.target.value))}
             />
           </FloatingLabel>
@@ -97,6 +100,7 @@ export default function EditProductModal({
               min={0}
               value={weight}
               step="0.1"
+              required={true}
               onChange={(e) => setWeight(parseFloat(e.target.value))}
             />
           </FloatingLabel>

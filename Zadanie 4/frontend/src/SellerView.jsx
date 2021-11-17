@@ -10,6 +10,7 @@ export default function SellerView() {
   const [orders, setOrders] = React.useState([]);
   const [statuses, setStatuses] = React.useState([]);
   const [productsToShow, setProductsToShow] = React.useState(10);
+  const [ordersToShow, setOrdersToShow] = React.useState(10);
   const [showAddProduct, setShowAddProduct] = React.useState(false);
   const [showEditProduct, setShowEditProduct] = React.useState(false);
   const [productToEdit, setProductToEdit] = React.useState(products[0] || {});
@@ -174,7 +175,7 @@ export default function SellerView() {
         </thead>
         <tbody style={{ alignContent: "center" }}>
           {orders
-            ? orders.map((or) => {
+            ? orders.slice(0, ordersToShow).map((or) => {
                 return (
                   <tr key={`${or.id}-${or.email}`}>
                     <td>{or.id}</td>
@@ -236,6 +237,29 @@ export default function SellerView() {
             : null}
         </tbody>
       </Table>
+      <Row
+        className="justify-content-md-center"
+        style={{ marginBottom: "1vh" }}
+      >
+        <Col md="auto">
+          <Button
+            onClick={() => setOrdersToShow(ordersToShow - 10)}
+            disabled={ordersToShow === 10 ? true : false}
+          >
+            Collapse
+          </Button>
+        </Col>
+        <Col md="auto">
+          <Button
+            onClick={() => setOrdersToShow(ordersToShow + 10)}
+            disabled={
+              orders.length > 10 && ordersToShow < orders.length ? false : true
+            }
+          >
+            Load more
+          </Button>
+        </Col>
+      </Row>
       <AddProductModal
         show={showAddProduct}
         onShow={showAddProductModal}
