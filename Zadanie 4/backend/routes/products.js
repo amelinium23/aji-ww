@@ -1,13 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var mysql = require("mysql");
 
-var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Tomczak123!",
-  database: "my_db",
-});
+var connection = require("../database.js");
 
 router.get("/", (req, res, next) => {
   connection.query("SELECT * FROM products", (err, rows, fields) => {
@@ -65,6 +59,7 @@ router.put(`/:productId`, (req, res, next) => {
     weight: req.body.weight,
     category_id: req.body.category_id,
   };
+  console.log(body);
   if (body) {
     connection.query(
       `UPDATE products 

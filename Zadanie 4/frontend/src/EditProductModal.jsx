@@ -10,10 +10,22 @@ export default function EditProductModal({
   categories,
 }) {
   const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [price, setPrice] = React.useState("");
-  const [weight, setWeight] = React.useState("");
+  const [description, setDescription] = React.useState(product.description);
+  const [price, setPrice] = React.useState(product.price);
+  const [weight, setWeight] = React.useState(product.weight);
   const [category, setCategory] = React.useState("");
+
+  React.useEffect(() => {
+    setName(product.name);
+    setDescription(product.description);
+    setPrice(product.price);
+    setWeight(product.weight);
+    setCategory(
+      categories.find((ct) => ct.id === product.category_id) ||
+        product.category_id
+    );
+    // eslint-disable-next-line
+  }, [product]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -43,14 +55,6 @@ export default function EditProductModal({
 
   const onClose = () => {
     onShow();
-    flush();
-  };
-
-  const flush = () => {
-    setName("");
-    setDescription("");
-    setPrice(0.0);
-    setWeight(0.0);
   };
 
   const findCategoryObject = (category) =>
@@ -64,7 +68,7 @@ export default function EditProductModal({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={onSubmit} validated>
+        <Form>
           <FloatingLabel label="Name" style={{ marginBottom: "1vh" }}>
             <Form.Control
               type="text"
@@ -80,7 +84,7 @@ export default function EditProductModal({
               rows={3}
               minLength={1}
               required={true}
-              value={description}
+              value={description || ""}
               onChange={(e) => setDescription(e.target.value)}
             />
           </FloatingLabel>
@@ -88,7 +92,7 @@ export default function EditProductModal({
             <Form.Control
               type="number"
               min={0}
-              value={price}
+              value={price || 0.0}
               step="0.1"
               required={true}
               onChange={(e) => setPrice(parseFloat(e.target.value))}
@@ -98,7 +102,7 @@ export default function EditProductModal({
             <Form.Control
               type="number"
               min={0}
-              value={weight}
+              value={weight || 0.0}
               step="0.1"
               required={true}
               onChange={(e) => setWeight(parseFloat(e.target.value))}

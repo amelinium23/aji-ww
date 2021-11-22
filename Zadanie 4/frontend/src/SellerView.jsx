@@ -13,7 +13,13 @@ export default function SellerView() {
   const [ordersToShow, setOrdersToShow] = React.useState(10);
   const [showAddProduct, setShowAddProduct] = React.useState(false);
   const [showEditProduct, setShowEditProduct] = React.useState(false);
-  const [productToEdit, setProductToEdit] = React.useState(products[0] || {});
+  const [productToEdit, setProductToEdit] = React.useState({
+    name: "",
+    price: 0.0,
+    category_id: 1,
+    description: "",
+    weight: 0.0,
+  });
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -79,8 +85,8 @@ export default function SellerView() {
   };
 
   const editProduct = (product) => {
-    showEditProductModal();
     setProductToEdit(product);
+    showEditProductModal();
   };
 
   const changeStateString = (state) => {
