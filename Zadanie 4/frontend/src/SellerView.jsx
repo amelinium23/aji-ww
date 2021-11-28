@@ -206,15 +206,26 @@ export default function SellerView() {
                         : or.product_id}
                     </td>
                     <td>
-                      <Dropdown>
-                        <Dropdown.Toggle variant="success">
-                          Change state
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                          {statuses.length > 0 && or.state >= 2
-                            ? statuses
-                                .filter((st) => st.id !== 1 && st.id !== 2)
-                                .map((st) => {
+                      {or.state === 3 || or.state === 4 ? null : (
+                        <Dropdown>
+                          <Dropdown.Toggle variant="success">
+                            Change state
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                            {statuses.length > 0 && or.state >= 2
+                              ? statuses
+                                  .filter((st) => st.id !== 1 && st.id !== 2)
+                                  .map((st) => {
+                                    return (
+                                      <Dropdown.Item
+                                        key={`${st.id}-${st.name}`}
+                                        onClick={() => changeStatus(or, st)}
+                                      >
+                                        {changeStateString(st)}
+                                      </Dropdown.Item>
+                                    );
+                                  })
+                              : statuses.map((st) => {
                                   return (
                                     <Dropdown.Item
                                       key={`${st.id}-${st.name}`}
@@ -223,19 +234,10 @@ export default function SellerView() {
                                       {changeStateString(st)}
                                     </Dropdown.Item>
                                   );
-                                })
-                            : statuses.map((st) => {
-                                return (
-                                  <Dropdown.Item
-                                    key={`${st.id}-${st.name}`}
-                                    onClick={() => changeStatus(or, st)}
-                                  >
-                                    {changeStateString(st)}
-                                  </Dropdown.Item>
-                                );
-                              })}
-                        </Dropdown.Menu>
-                      </Dropdown>
+                                })}
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      )}
                     </td>
                   </tr>
                 );
